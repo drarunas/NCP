@@ -1,0 +1,426 @@
+.dt_icon_column {
+    width: 0px;
+    min-width: 0px;
+    text-align: right;
+}
+
+body {
+    display: grid;
+    place-items: center; /* Shortcut for align-items and justify-items */
+    min-height: 10vh; /* Ensures the body takes at least the full height of the viewport */
+    margin: 0; /* Removes the default margin */
+    background-color: #f8f8f8;
+}
+
+BODY {
+    font-size: 16px;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+}
+
+TD {
+    font-size: 16px;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+}
+TR {
+    font-size: 16px;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+}
+.BODY {
+    font-size: 16px;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+}
+A {
+    color: #003399;
+}
+A:visited {
+    color: #003399;
+}
+A:hover {
+    color: #ff3300;
+}
+A.nav {
+    font-weight: bold;
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+}
+A.nav:visited {
+    font-weight: bold;
+    font-size: 14px;
+    color: #ffffff;
+    text-decoration: none;
+}
+A.nav:hover {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333333;
+    text-decoration: none;
+}
+.navOff {
+    font-weight: bold;
+    font-size: 14px;
+    color: #666666;
+    text-decoration: none;
+}
+TD.ncommsbg {
+    background-color: #e63023;
+}
+TR.ncommsbg {
+    background-color: #e63023;
+}
+
+TD.ncommsbglt {
+    background-color: #8a999e;
+}
+TD.navlt {
+    background-color: #cccccc;
+}
+TR.navlt {
+    background-color: #cccccc;
+}
+TD.navdk {
+    background-color: #333333;
+}
+TR.navdk {
+    background-color: #333333;
+}
+TD.navbg {
+    background-color: #999999;
+}
+TR.navbg {
+    background-color: #999999;
+}
+TD.footer {
+    font-weight: normal;
+    font-size: 14px;
+    color: #999999;
+    text-decoration: none;
+}
+A.footer {
+    font-weight: bold;
+    font-size: 14px;
+    color: #999999;
+    text-decoration: none;
+}
+A.footer:visited {
+    font-weight: bold;
+    font-size: 14px;
+    color: #999999;
+    text-decoration: none;
+}
+A.footer:hover {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333333;
+    text-decoration: none;
+}
+.openacctbg {
+    background-color: #ffcc33;
+}
+.TEXT {
+    color: #000000;
+}
+.TTS {
+    font-weight: bold;
+    color: #666666;
+}
+.TTS2 {
+    font-size: 14px;
+}
+.TES {
+    font-size: 14px;
+    color: #ff0000;
+}
+.TRS {
+    font-size: 10px;
+}
+.SMALL1 {
+    font-size: 10px;
+}
+.SMALL2 {
+    font-size: 10px;
+}
+.SMALL3 {
+    font-size: 10px;
+}
+.GUTTER1 {
+    font-size: 12px;
+    color: #ffcc66;
+}
+.REDN {
+    font-weight: normal;
+    font-size: 10px;
+    color: #ff3300;
+}
+.JLBBL {
+    font-size: 9px;
+    color: #f7efce;
+    background-color: #530d21;
+}
+.JLB1 {
+    font-size: 18pt;
+    color: #530d21;
+    background-color: #f7efce;
+}
+.MBC2 {
+    font-size: 9px;
+    color: #ffffff;
+    background-color: #004080;
+}
+.WH {
+    font-size: 9px;
+    color: #530d21;
+}
+.GUTTER2 {
+    font-size: 11px;
+    color: #ffffff;
+}
+.GUTTER3 {
+    font-size: 11px;
+    color: #ccccff;
+}
+A.BAR {
+    font-size: 11px;
+    color: #ffffff;
+    text-decoration: none;
+}
+A.HELPBAR {
+    font-size: 11px;
+    color: #000000;
+    text-decoration: none;
+}
+A.GUTTER1 {
+    font-weight: normal;
+    font-size: 12px;
+    color: #ffcc66;
+    line-height: normal;
+    font-style: normal;
+    font-variant: normal;
+    text-decoration: none;
+}
+A.GUTTER2 {
+    font-size: 11px;
+    color: #ffffff;
+    text-decoration: none;
+}
+A.SP {
+    font-size: 11px;
+    text-decoration: none;
+}
+A.ND {
+    text-decoration: none;
+}
+A.H1 {
+    font-weight: bold;
+    font-size: 18pt;
+    color: #000000;
+    text-decoration: none;
+}
+A.H6 {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #000000;
+    text-decoration: none;
+}
+H1 {
+    font-weight: bold;
+    font-size: 18px;
+}
+.H1 {
+    font-weight: bold;
+    font-size: 18px;
+}
+H2 {
+    font-weight: bold;
+    font-size: 16px;
+}
+.H2 {
+    font-weight: bold;
+    font-size: 16px;
+}
+H3 {
+    font-weight: bold;
+    font-size: 14px;
+}
+.H3 {
+    font-weight: bold;
+    font-size: 14px;
+}
+H4 {
+    font-weight: bold;
+    font-size: 12px;
+}
+.H4 {
+    font-weight: bold;
+    font-size: 12px;
+}
+H5 {
+    font-weight: bold;
+    font-size: 11px;
+}
+.H5 {
+    font-weight: bold;
+    font-size: 11px;
+}
+H6 {
+    font-weight: bold;
+    font-size: 10px;
+}
+.H6 {
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.MSG {
+    color: #ff3300;
+}
+
+.TITLE {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.HELP {
+    font-family: "Roboto", sans-serif;
+}
+
+.SMALLHEAD {
+    font-size: 11px;
+    color: #ffffff;
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+}
+
+.SMALLTD {
+    font-size: 11px;
+    font-family: "Roboto", sans-serif;
+}
+
+.APTOP {
+    color: #000000;
+    background-color: #999999;
+    font-size: 11px;
+    font-family: "Roboto", sans-serif;
+}
+
+.APLIST {
+    font-size: 11px;
+    font-family: "Roboto", sans-serif;
+    background-color: #eaeaea;
+}
+
+/* Buttons and text inputs*/
+input {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    border-radius: 5px; /* Adjust the border radius for a less square shape */
+    padding: 8px 12px; /* Adjust the padding for better button appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border: none; /* Remove default button border */
+}
+
+.folder_row_even {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.folder_row_odd {
+    background-color: #d7cfd0;
+    color: #000000;
+}
+
+.folder_row_header {
+    background-color: #f1b6aa;
+    color: #ffffff;
+    padding: 2px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    color: #000000;
+    font-family: "Roboto", sans-serif;
+}
+
+.folder_table {
+    border-style: none;
+    margin: auto;
+    padding: 5px;
+}
+.folder_table td,
+.folder_table th {
+    padding: 8px;
+    margin: auto;
+    border-radius: 4px;
+}
+
+/* Buttons */
+button {
+    font-family: "Roboto", sans-serif;
+    font-size: 12px; /* Adjust the font size as needed */
+    border-radius: 5px; /* Adjust the border radius for a less square shape */
+    padding: 8px 12px; /* Adjust the padding for better button appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border: none; /* Remove default button border */
+}
+
+select {
+    font-family: "Roboto", sans-serif;
+    font-size: 14px; /* Adjust the font size as needed */
+    border-radius: 5px; /* Adjust the border radius for a less square shape */
+    padding: 8px 12px; /* Adjust the padding for better appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border: 1px solid #ccc; /* Add a border to improve visibility */
+    background-color: #fff; /* Set background color */
+}
+
+#ms_brief_table,
+#ms_brief_table td,
+#ms_brief_table th,
+#ms_brief_table tr {
+    border: none !important; /* Remove the border */
+    background-color: #f1b6aa; /* Set background color */
+    padding: 5px;
+    border-radius: 5px;
+    margin: auto;
+}
+
+.modern-look {
+    /* Example styles for a modern look */
+
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #ffffff;
+    margin: auto;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.modern-look td,
+.modern-look th {
+    border: 0px solid #ddd;
+    padding: 4px;
+}
+
+.modern-look th {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: left;
+    background-color: #04aa6d;
+    color: white;
+}
+
+.tabPage tbody,
+.tabPage table,
+.tabPage tr,
+.tabPage td,
+.tabPage th {
+    border: 0px;
+    border-radius: 5px;
+    overflow: hidden;
+}

@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "NCP",
+    "version": "1.0",
+    "description": "NCPs",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mts-ncomms.nature.com/*"
+            ],
+            "js": [
+                "jquery.js",
+                "content.js"
+            ],
+            "css": [
+                "custom.css"
+            ],
+            "web_accessible_resources": [
+                "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+                "https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap",
+                "https://fonts.googleapis.com/css?family=Lora&display=swap"
+            ],
+            "module": true
+        }
+    ],
+    "permissions": [
+        "tabs",
+        "storage"
+    ]
+}
