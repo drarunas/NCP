@@ -10,21 +10,37 @@
             ],
             "js": [
                 "jquery.js",
-                "content.js"
+                "contentMTS.js"
             ],
             "css": [
                 "custom.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://reviewerfinder.nature.com/*"
             ],
-            "web_accessible_resources": [
-                "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
-                "https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap",
-                "https://fonts.googleapis.com/css?family=Lora&display=swap"
+            "js": [
+                "jquery.js",
+                "contentReviewerFinder.js"
             ],
-            "module": true
+            "css": [
+                "customRF.css"
+            ]
         }
     ],
+    "web_accessible_resources": [],
     "permissions": [
         "tabs",
-        "storage"
-    ]
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://reviewerfinder.nature.com/*",
+        "https://mts-ncomms.nature.com/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    }
 }

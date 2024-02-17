@@ -1,24 +1,31 @@
+chrome.runtime.onInstalled.addListener(() => {
+    console.log("Extension installed");
+});
+let mtsTabId = null; // To store the ID of the original MTS tab
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "open_tab") {
-        // Open a new tab with the Reviewer Finder website
+    if (message.action === "openReviewerFinder") {
+        mtsTabId = sender.tab.id; // Store the originating MTS tab ID
         chrome.tabs.create(
             { url: "https://reviewerfinder.nature.com/" },
             (tab) => {
-                // When the tab finishes loading, send a message back to the content script
-                // in the new tab
+                console.log("Reviewer Finder tab opened", tab);
+
+                // Wait for the tab to be fully loaded before injecting the content script
                 chrome.tabs.onUpdated.addListener(function listener(
                     tabId,
-                    changeInfo,
-                    tab
+                    changeInfo
                 ) {
                     if (tabId === tab.id && changeInfo.status === "complete") {
-                        chrome.tabs.sendMessage(tabId, {
-                            action: "insert_text",
-                            title: message.title,
-                            abstract: message.abstract,
-                            authors: message.authors
-                        });
+                        // Remove the listener after injecting to avoid repeated injections
                         chrome.tabs.onUpdated.removeListener(listener);
+
+                        // Inject the content script
+                        chrome.scripting.executeScript({
+                            target: { tabId: tab.id },
+                            function: prefillReviewerFinderForm,
+                            args: [message.data] // Pass the data to the content script function
+                        });
                     }
                 });
             }
@@ -27,18 +34,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message && message.action === "Add Ref") {
-        // send a message to all tabs
-        chrome.tabs.query({}, function (tabs) {
-            for (let i = 0; i < tabs.length; i++) {
-                chrome.tabs.sendMessage(tabs[i].id, {
-                    action: "Add Ref",
-                    email: message.email,
-                    fname: message.fname,
-                    lname: message.lname,
-                    org: message.org
-                });
-            }
+    if (message.action === "sendReviewerDataToMts" && mtsTabId !== null) {
+        console.log(message);
+        // Use the stored MTS tab ID to send the message to that specific tab
+        chrome.tabs.sendMessage(mtsTabId, {
+            action: "reviewerDetails",
+            data: message.data
         });
     }
 });
+
+// This function will be injected into the opened tab to prefill the form
+function prefillReviewerFinderForm(data) {
+    // Assuming the page structure of reviewerfinder.nature.com allows direct DOM manipulation
+    const { title, authors, abstract } = data;
+    document.querySelector("#paper_title").value = title;
+    document.querySelector("#paper_authors").value = authors;
+    document.querySelector("#paper_abstract").value = abstract;
+}

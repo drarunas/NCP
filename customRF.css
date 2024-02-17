@@ -1,0 +1,30 @@
+/* Buttons and text inputs*/
+input {
+    background-color: #ececec;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    border-radius: 3px; /* Adjust the border radius for a less square shape */
+    padding: 5px 5x; /* Adjust the padding for better button appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border-width: 1px;
+}
+
+input[type="button"] {
+    background-color: antiquewhite;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
+    border-radius: 5px; /* Adjust the border radius for a less square shape */
+    padding: 8px 12px; /* Adjust the padding for better button appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    margin: 2px;
+    border: none;
+}
+button {
+    font-size: 14px; /* Adjust the font size as needed */
+    border-radius: 5px; /* Adjust the border radius for a less square shape */
+    padding: 8px 12px; /* Adjust the padding for better button appearance */
+    margin: 5px;
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border: none; /* Remove default button border */
+    background-color: antiquewhite;
+}

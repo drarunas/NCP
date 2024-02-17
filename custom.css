@@ -9,7 +9,8 @@ body {
     place-items: center; /* Shortcut for align-items and justify-items */
     min-height: 10vh; /* Ensures the body takes at least the full height of the viewport */
     margin: 0; /* Removes the default margin */
-    background-color: #f8f8f8;
+    background-color: #f7f9fb;
+    margin-top: 50px;
 }
 
 BODY {
@@ -315,12 +316,25 @@ H6 {
 
 /* Buttons and text inputs*/
 input {
+    background-color: #ececec;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
+    border-radius: 3px; /* Adjust the border radius for a less square shape */
+    padding: 5px 5x; /* Adjust the padding for better button appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border-width: 1px;
+}
+
+input[type="button"],
+input[type="submit"] {
+    background-color: antiquewhite;
+    font-family: "Roboto", sans-serif;
+    font-size: 12px;
     border-radius: 5px; /* Adjust the border radius for a less square shape */
     padding: 8px 12px; /* Adjust the padding for better button appearance */
     cursor: pointer; /* Add cursor pointer to indicate interactivity */
-    border: none; /* Remove default button border */
+    margin: 2px;
+    border: none;
 }
 
 .folder_row_even {
@@ -329,12 +343,12 @@ input {
 }
 
 .folder_row_odd {
-    background-color: #d7cfd0;
+    background-color: #fffcfc;
     color: #000000;
 }
 
 .folder_row_header {
-    background-color: #f1b6aa;
+    background-color: #f0edec;
     color: #ffffff;
     padding: 2px;
     border-radius: 5px;
@@ -364,13 +378,14 @@ button {
     padding: 8px 12px; /* Adjust the padding for better button appearance */
     cursor: pointer; /* Add cursor pointer to indicate interactivity */
     border: none; /* Remove default button border */
+    background-color: antiquewhite;
 }
 
 select {
     font-family: "Roboto", sans-serif;
     font-size: 14px; /* Adjust the font size as needed */
-    border-radius: 5px; /* Adjust the border radius for a less square shape */
-    padding: 8px 12px; /* Adjust the padding for better appearance */
+    border-radius: 4px; /* Adjust the border radius for a less square shape */
+    padding: 4px 6px; /* Adjust the padding for better appearance */
     cursor: pointer; /* Add cursor pointer to indicate interactivity */
     border: 1px solid #ccc; /* Add a border to improve visibility */
     background-color: #fff; /* Set background color */
@@ -422,5 +437,136 @@ select {
 .tabPage th {
     border: 0px;
     border-radius: 5px;
-    overflow: hidden;
+}
+
+/* Popup Window */
+.popupWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f6f6f6;
+    padding: 15px; /* Adjusted to account for inner content padding */
+    border-radius: 5px;
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.3);
+    z-index: 10001;
+    width: 80%; /* Adjust width as needed */
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent the main container from scrolling */
+}
+
+/* Scrollable Content Area */
+.popupContent {
+    overflow-y: auto; /* Enable vertical scrolling for the content */
+    margin-top: 30px; /* Space for the close button */
+}
+
+/* Close Button */
+.closeButton {
+    position: absolute;
+    padding: 10px;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+}
+
+#myExtensionSearchBox {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px; /* Adjust this value as needed */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#searchInput {
+    width: calc(100% - 100px); /* Adjust based on the button width */
+    padding: 2px;
+}
+
+#searchBtn {
+    width: 80px; /* Adjust as needed */
+    margin-left: 10px; /* Spacing between input and button */
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1); /* Lighter border for the whole spinner */
+    border-top: 4px solid #3498db; /* Typically a darker or more vibrant color for the animated part */
+    border-radius: 50%; /* This ensures the spinner is circular */
+    width: 20px; /* Width of the spinner */
+    height: 20px; /* Height of the spinner, equal to width for a circle */
+    animation: spin 2s linear infinite; /* Adjust animation as needed */
+    display: inline-block; /* Adjust display as needed, depending on layout */
+}
+#myExtensionSearchBox .spinner {
+    flex: 0 0 auto; /* Prevents the spinner from growing or shrinking */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#homeBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 15px; /* Adjust size as needed */
+    margin-right: 5px;
+}
+
+.reviewerFinderPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0f0f0;
+    padding: 20px;
+    z-index: 1000;
+    border: 0px solid #ccc;
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
+    width: 600px;
+    max-width: 90%;
+    border-radius: 5px;
+    /* Ensure it doesn't overflow the screen */
+}
+
+.popupList {
+    overflow-y: scroll;
+    max-height: 200px;
+    list-style-type: none;
+    padding: 5px;
+}
+
+.popupList li {
+    margin-bottom: 10px;
+}
+
+.reviewerFinderPopup .popupHeader {
+    display: flex; /* Enables flexbox layout */
+    align-items: center; /* Vertically centers the title and button */
+    justify-content: space-between; /* Spaces title and button */
+}
+
+.reviewerFinderPopup .popupTitle {
+    margin: 0; /* Removes default margin */
+    flex-grow: 1; /* Allows the title to take up available space */
+}
+
+.reviewerFinderPopup .popupCloseButton {
+    margin-left: 20px; /* Adds some space between the title and the button */
+    cursor: pointer; /* Changes cursor to pointer on hover */
 }
