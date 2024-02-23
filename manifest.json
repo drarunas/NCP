@@ -29,12 +29,23 @@
             ]
         }
     ],
-    "web_accessible_resources": [],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "setcolor.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
     "permissions": [
         "tabs",
         "storage",
         "activeTab",
-        "scripting"
+        "scripting",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess"
     ],
     "host_permissions": [
         "https://reviewerfinder.nature.com/*",

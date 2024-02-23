@@ -11,37 +11,45 @@ body {
     margin: 0; /* Removes the default margin */
     background-color: #f7f9fb;
     margin-top: 50px;
+    grid-template-columns: 1fr; /* Example: sidebar and main content */
+    gap: 20px;
 }
 
 BODY {
     font-size: 16px;
-    color: #000000;
+    color: #223240;
+    font-family: "Roboto", sans-serif;
+}
+
+textarea {
+    font-size: 14px;
+    color: #223240;
     font-family: "Roboto", sans-serif;
 }
 
 TD {
     font-size: 16px;
-    color: #000000;
+    color: #223240;
     font-family: "Roboto", sans-serif;
 }
 TR {
     font-size: 16px;
-    color: #000000;
+    color: #223240;
     font-family: "Roboto", sans-serif;
 }
 .BODY {
     font-size: 16px;
-    color: #000000;
+    color: #223240;
     font-family: "Roboto", sans-serif;
 }
 A {
-    color: #003399;
+    color: #223240;
 }
 A:visited {
-    color: #003399;
+    color: #223240;
 }
 A:hover {
-    color: #ff3300;
+    color: #223240;
 }
 A.nav {
     font-weight: bold;
@@ -396,17 +404,26 @@ select {
 #ms_brief_table th,
 #ms_brief_table tr {
     border: none !important; /* Remove the border */
-    background-color: #f1b6aa; /* Set background color */
+    background-color: #ffffff; /* Set background color */
     padding: 5px;
     border-radius: 5px;
     margin: auto;
+}
+
+#ms_brief_table {
+    border: none !important; /* Remove the border */
+    background-color: #ffffff; /* Set background color */
+    padding: 5px;
+    border-radius: 5px;
+    margin: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.23);
 }
 
 .modern-look {
     /* Example styles for a modern look */
 
     border-collapse: collapse;
-    width: 100%;
+    width: 60%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     overflow: hidden;
@@ -483,18 +500,18 @@ select {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
-    max-width: 600px; /* Adjust this value as needed */
+    max-width: 650px; /* Adjust this value as needed */
     width: 100%;
     box-sizing: border-box;
 }
 
 #searchInput {
-    width: calc(100% - 100px); /* Adjust based on the button width */
+    width: calc(100% - 120px); /* Adjust based on the button width */
     padding: 2px;
 }
 
 #searchBtn {
-    width: 80px; /* Adjust as needed */
+    width: 120px; /* Adjust as needed */
     margin-left: 10px; /* Spacing between input and button */
 }
 
@@ -520,12 +537,24 @@ select {
     }
 }
 
-#homeBtn {
+#homeBtn,
+.topButtons {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 15px; /* Adjust size as needed */
-    margin-right: 5px;
+    margin-right: 2px;
+}
+
+.stickynote,
+.stickytitle {
+    border: 0px solid antiquewhite !important;
+    width: 600px;
+    max-width: 90%;
+    border-radius: 5px;
+}
+.stickynote {
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .reviewerFinderPopup {
@@ -569,4 +598,40 @@ select {
 .reviewerFinderPopup .popupCloseButton {
     margin-left: 20px; /* Adds some space between the title and the button */
     cursor: pointer; /* Changes cursor to pointer on hover */
+}
+
+.contact_pot_revs_table {
+    background-color: #fffef6; /* Lightest pink background for the table */
+    border-collapse: collapse; /* Removes the borders */
+}
+
+.contact_pot_revs_table th,
+.contact_pot_revs_table td {
+    padding: 4px; /* Padding inside each table cell and header */
+}
+
+.contact_pot_revs_table tr:nth-child(odd) {
+    background-color: #f2f1ee; /* Light purple for odd rows */
+}
+
+.contact_pot_revs_table tr:first-child {
+    background-color: #fff7ea; /* Light peach for the header row */
+}
+
+.other-tasks-table {
+    border-collapse: collapse;
+    display: block; /* Block display to respect width settings */
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #ffffff;
+    margin: auto;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.other-tasks-table td {
+    word-break: break-all !important; /* This will break the URL at any character to ensure it fits within its container */
 }

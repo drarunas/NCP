@@ -13,7 +13,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 // This function is assumed to be part of your content script for reviewerfinder.nature.com
 function processReviewerPanels() {
-    //  observer.disconnect();
+    let uniqueIdCounter = 0; // If generating unique IDs
 
     const reviewerPanels = document.querySelectorAll(".reviewer_panel");
 
@@ -38,16 +38,29 @@ function processReviewerPanels() {
             ? institutionElement.textContent.trim()
             : "Unknown";
 
+        const uniqueId = reviewerEmail || `reviewer-${uniqueIdCounter++}`; // Use email or a generated ID
+
         // Insert "Assign" button
         const assignButton = document.createElement("button");
-        assignButton.textContent = "Assign";
+        assignButton.textContent = "➡️ Assign";
+        assignButton.dataset.reviewerId = uniqueId;
         assignButton.classList.add("assign-reviewer-btn"); // Add class for styling if needed
+
         assignButton.onclick = (event) => {
             event.preventDefault(); // Prevent form submission
+            // Clear existing button text and disable the button
+            assignButton.textContent = "";
+            assignButton.disabled = true;
+
+            // Create and add spinner element
+            const spinner = document.createElement("div");
+            spinner.classList.add("spinner");
+            assignButton.appendChild(spinner);
             sendReviewerDataToMtsTab(
                 reviewerName,
                 reviewerEmail,
-                reviewerInstitution
+                reviewerInstitution,
+                uniqueId
             );
         };
 
@@ -58,7 +71,7 @@ function processReviewerPanels() {
 
 // Function to handle the click event of the "Assign" button
 // Assuming this function is triggered when the "Assign" button is clicked
-function sendReviewerDataToMtsTab(fullName, email) {
+function sendReviewerDataToMtsTab(fullName, email, inst, uniqueId) {
     // Splitting fullName into first and last names
     const [lastName, firstName] = fullName
         .split(", ")
@@ -67,9 +80,37 @@ function sendReviewerDataToMtsTab(fullName, email) {
     // Send a message to your extension's background script or directly to the MTS tab if you have the tab ID
     chrome.runtime.sendMessage({
         action: "sendReviewerDataToMts",
-        data: { firstName, lastName, email }
+        data: { firstName, lastName, email, inst, uniqueId }
     });
 }
+//listen for assignment completion messages from MTS
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "updateAssignmentStatus") {
+        const assignButton = document.querySelector(
+            `button[data-reviewer-id="${message.uniqueId}"]`
+        );
+
+        if (assignButton) {
+            // Remove spinner
+            const spinner = assignButton.querySelector(".spinner");
+            if (spinner) {
+                spinner.remove();
+            }
+
+            // Update button text based on the operation result
+            if (message.status === "success") {
+                assignButton.textContent = "✅";
+                assignButton.classList.add("button-disabled");
+            } else if (message.status === "error") {
+                assignButton.textContent = "Error";
+                assignButton.classList.add("button-error");
+            }
+
+            // Optionally, you can fully disable the button or adjust its appearance further
+            assignButton.disabled = true;
+        }
+    }
+});
 
 $(document).ready(function () {
     // Instantiate the MutationObserver

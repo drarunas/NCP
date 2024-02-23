@@ -22,9 +22,36 @@ input[type="button"] {
 button {
     font-size: 14px; /* Adjust the font size as needed */
     border-radius: 5px; /* Adjust the border radius for a less square shape */
-    padding: 8px 12px; /* Adjust the padding for better button appearance */
+    padding: 8px 2px; /* Adjust the padding for better button appearance */
     margin: 5px;
     cursor: pointer; /* Add cursor pointer to indicate interactivity */
     border: none; /* Remove default button border */
+}
+
+.assign-reviewer-btn {
+    font-family: "Roboto", sans-serif;
+    font-size: 16px; /* Adjust the font size as needed */
+    border-radius: 5px; /* Adjust the border radius for a less square shape */
+    padding: 8px 12px; /* Adjust the padding for better button appearance */
+    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border: none; /* Remove default button border */
     background-color: antiquewhite;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #09f;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
