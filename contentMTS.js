@@ -284,8 +284,8 @@ if (host.includes("mts-ncomms.nature.com")) {
 <div id="myExtensionSearchBox">
   <button id="homeBtn" class="topButtons" title="Home">🏠</button>
   <button id="initialAssessmentBtn" class="topButtons" title="Initial assessment">📃</button>
+    <button id="inboxBtn" class="topButtons" title="Circulations">🕓</button>
   <button id="decisionsBtn" class="topButtons" title="Decisions">✔️</button>
-  <button id="inboxBtn" class="topButtons" title="Inbox">🕓</button>
   <button id="allBtn" class="topButtons" title="All">📁</button>
   <input type="text" id="searchInput" placeholder="🐳 Last Name or MS#">
   <div id="spinner" class="spinner" style="display: none;"></div>
@@ -1042,3 +1042,24 @@ $(document).ready(function () {
         checkbox.addEventListener("change", filterOptions);
     }
 });
+
+document
+    .querySelectorAll(
+        ".folder_table td.folder_row_even, .folder_table td.folder_row_odd"
+    )
+    .forEach((td) => {
+        // Only add a wrapper if it doesn't already exist
+        if (!td.querySelector(".content-wrapper")) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "content-wrapper";
+            wrapper.style.maxHeight = "100px"; // Adjust as needed
+            wrapper.style.overflow = "auto";
+            wrapper.style.width = "100%"; // Ensure it occupies the full width of the td
+
+            Array.from(td.childNodes).forEach((child) => {
+                wrapper.appendChild(child);
+            });
+
+            td.appendChild(wrapper);
+        }
+    });
