@@ -46,10 +46,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 //        });
 //    }
 //});
+// Forward message with reviewer details to mts tab
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("All messages: ", message, sender);
-
-    // First, check if the action is 'sendReviewerDataToMts'
     if (message.action === "sendReviewerDataToMts") {
         // Retrieve the mtsTabId asynchronously only if the action matches
         chrome.storage.local.get("mtsTabId", function (data) {
@@ -57,7 +56,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
             // Now, check if mtsTabId is not null (or undefined) before sending the message
             if (mtsTabId != null) {
-                // Use the stored MTS tab ID to send the message to that specific tab
+                // Use the stored MTS tab ID to send the message to that specific MTS tab
                 chrome.tabs.sendMessage(mtsTabId, {
                     action: "reviewerDetails",
                     data: message.data,

@@ -1,5 +1,5 @@
+// Add sticky management script
 const host = window.location.host;
-console.log(host);
 const scriptElement = document.createElement("script");
 scriptElement.src = chrome.runtime.getURL("setcolor.js");
 scriptElement.onload = function () {
@@ -29,14 +29,12 @@ if (host.includes("mts-ncomms.nature.com")) {
         linkElement.remove();
     }
 }
-
 function loadRobotoFont() {
     // Create a <link> element to import the Roboto font from Google Fonts
     var linkElement = document.createElement("link");
     linkElement.href =
         "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap";
     linkElement.rel = "stylesheet";
-
     document.head.appendChild(linkElement);
 }
 if (host.includes("mts-ncomms.nature.com")) {
@@ -274,7 +272,7 @@ $(document).ready(function () {
         }
     }*/
 });
-
+// Add search bar on top of page
 if (host.includes("mts-ncomms.nature.com")) {
     // SEARCH BOX ON TOP OF PAGE
 
@@ -431,7 +429,7 @@ $(document).ready(function () {
         console.log('Form with id "nf_assign_ref" not found.');
     }
 });
-
+//Add reviewer search bar at the bottom
 function addMiniWindow() {
     const miniWindowHTML = `
         <div id="miniWindow" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f0f0f0; padding: 10px; box-shadow: 0 -2px 5px rgba(0,0,0,0.2); display: flex; justify-content: center; gap: 10px;">
@@ -446,7 +444,7 @@ function addMiniWindow() {
     document.getElementById("addButton").addEventListener("click", submitForm);
     document
         .getElementById("reviewerFinder")
-        .addEventListener("click", extractTableData);
+        .addEventListener("click", initiateRevFinding);
 }
 
 function submitForm() {
@@ -601,8 +599,8 @@ function assignReviewer(
             console.error("Error during assignment:", error);
         });
 }
-
-function extractTableData() {
+// when RF button clicked -> reviewerFinderPopup reviewerFinder
+function initiateRevFinding() {
     const msDetailsRow = document.querySelector(
         "#ms_details_row_author_information"
     );
@@ -664,8 +662,6 @@ function extractTableData() {
         abstract: findDataByText("Abstract"),
         authors
     });
-    // Assuming you have a function to handle the extracted data
-    // handleExtractedData(findDataByText('Title'), findDataByText('Abstract'), authors);
     reviewerFinder(
         findDataByText("Title"),
         authors,
@@ -674,13 +670,15 @@ function extractTableData() {
     reviewerFinderPopup();
 }
 
+// Construct a reviewer list popup after clicking Rev Finder button
 function reviewerFinderPopup() {
     // Create the popup container
     const popup = document.createElement("div");
-    popup.className = "reviewerFinderPopup"; // Assign a class for styling
+    popup.className = "reviewerFinderPopup";
 
     const form = document.getElementById("nf_assign_rev");
 
+    // get page parameters
     const getValueByName = (name) => {
         const element = form ? form.querySelector(`[name="${name}"]`) : null;
         return element ? element.value : null;
@@ -731,8 +729,7 @@ function reviewerFinderPopup() {
     document.body.appendChild(popup);
 }
 
-// Function to add items to the popup list
-// Function to add reviewer details to the popup list
+// Function to add reviewer details to the popup list but not eJP revs
 function populatePopupList(firstName, lastName, email, comment) {
     const list = document.querySelector(".popupList"); // Find the list by class name
     if (list) {
@@ -745,27 +742,29 @@ function populatePopupList(firstName, lastName, email, comment) {
         );
     }
 }
-
+// Send a message to open a new RF tab
 function reviewerFinder(title, authors, abstract) {
     chrome.runtime.sendMessage({
         action: "openReviewerFinder",
         data: { title, authors, abstract }
     });
 }
+// Listen to bg message with rev details
+// Currently immediately assigns on eJP using  submitFormAssign
+// v2 Change this to add to potential rev list, to popup, and wait for further processing before assigning on eJP
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "reviewerDetails") {
         const { firstName, lastName, inst, email, uniqueId } = message.data;
         const senderTabId = message.senderTabId;
         console.log("received in mts", message.data);
         submitFormAssign(firstName, lastName, email, uniqueId, senderTabId);
-        //sendResponse({ status: "success", result: result });
     }
 });
-
+// Submits the forms via POST that actually assign revs on eJP
 function submitFormAssign(firstName, lastName, email, uniqueId, senderTabId) {
     const form = document.getElementById("nf_assign_rev");
 
-    // Safely extracting values by checking if elements exist
+    // get page parameters
     const getValueByName = (name) => {
         const element = form.querySelector(`[name="${name}"]`);
         return element ? element.value : null;
@@ -780,7 +779,9 @@ function submitFormAssign(firstName, lastName, email, uniqueId, senderTabId) {
     const currentStageId = getValueByName("current_stage_id");
     const desiredRevCnt = getValueByName("desired_rev_cnt");
 
-    // Constructing the request body with both static and dynamic parts
+    // Constructing the request body using above parameters
+    // and reviewer details, action=Add+Person+Check
+    // uses fname lname email but not inst
     const requestBody = `form_type=${encodeURIComponent(
         formType
     )}&j_id=${encodeURIComponent(jId)}&ms_id=${encodeURIComponent(
@@ -801,7 +802,6 @@ function submitFormAssign(firstName, lastName, email, uniqueId, senderTabId) {
             "accept-language": "en-US,en;q=0.9",
             "cache-control": "max-age=0",
             "content-type": "application/x-www-form-urlencoded"
-            // Include other necessary headers
         },
         referrer: "https://mts-ncomms.nature.com/cgi-bin/main.plex",
         referrerPolicy: "strict-origin-when-cross-origin",
@@ -832,6 +832,10 @@ function submitFormAssign(firstName, lastName, email, uniqueId, senderTabId) {
                 ) &&
                 tableExists
             ) {
+                // CASE 1: result page says that matching reviewers found on eJP
+                // currently takes first reviewer from what eJP returns
+                // and then calls assignReviewer using reviewerId
+                // then adds to popup window list
                 // Find the input element within the table and get its value
                 const inputRadio = doc.querySelector(
                     'input[type="radio"][name="reviewer"]'
@@ -867,7 +871,10 @@ function submitFormAssign(firstName, lastName, email, uniqueId, senderTabId) {
                 } else {
                     console.log("No matching input element found.");
                 }
-            } else {
+            }
+            // CASE 2: No existing rev found on eJP becasue result of POST was a script with redirect?
+            //
+            else {
                 // Check for <script> tags containing specific JavaScript redirection
                 const scripts = doc.querySelectorAll("script");
                 let foundRedirect = false;
@@ -911,7 +918,7 @@ function submitFormAssign(firstName, lastName, email, uniqueId, senderTabId) {
             );
         });
 }
-
+// Filter circulation editor list to human team only
 $(document).ready(function () {
     // Attempt to find the select element by its name
     const selectElement = document.getElementsByName("editor_list")[0];
@@ -974,7 +981,7 @@ $(document).ready(function () {
         );
     }
 });
-
+// Filter common letter types in a decision page dropdown
 $(document).ready(function () {
     const selectElement = document.querySelector('select[name="template"]');
 
@@ -1042,7 +1049,7 @@ $(document).ready(function () {
         checkbox.addEventListener("change", filterOptions);
     }
 });
-
+// Add divs to folder table cells to manage overflow and scrolls
 document
     .querySelectorAll(
         ".folder_table td.folder_row_even, .folder_table td.folder_row_odd"

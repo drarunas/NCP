@@ -65,7 +65,6 @@ function processReviewerPanels() {
         };
 
         panel.appendChild(assignButton);
-        // observer.observe(document.body, config);
     });
 }
 
@@ -77,12 +76,14 @@ function sendReviewerDataToMtsTab(fullName, email, inst, uniqueId) {
         .split(", ")
         .map((name) => name.trim());
     console.log(firstName, lastName, email);
-    // Send a message to your extension's background script or directly to the MTS tab if you have the tab ID
+    // Send a message to your extension's background script
     chrome.runtime.sendMessage({
         action: "sendReviewerDataToMts",
         data: { firstName, lastName, email, inst, uniqueId }
     });
 }
+
+
 //listen for assignment completion messages from MTS
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "updateAssignmentStatus") {
