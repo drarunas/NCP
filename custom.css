@@ -519,8 +519,8 @@ select {
     border: 4px solid rgba(0, 0, 0, 0.1); /* Lighter border for the whole spinner */
     border-top: 4px solid #3498db; /* Typically a darker or more vibrant color for the animated part */
     border-radius: 50%; /* This ensures the spinner is circular */
-    width: 20px; /* Width of the spinner */
-    height: 20px; /* Height of the spinner, equal to width for a circle */
+    width: 15px; /* Width of the spinner */
+    height: 15px; /* Height of the spinner, equal to width for a circle */
     animation: spin 2s linear infinite; /* Adjust animation as needed */
     display: inline-block; /* Adjust display as needed, depending on layout */
 }
@@ -567,21 +567,50 @@ select {
     z-index: 1000;
     border: 0px solid #ccc;
     box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
-    width: 600px;
+    width: 70%;
     max-width: 90%;
+    max-height: 800px;
     border-radius: 5px;
     /* Ensure it doesn't overflow the screen */
 }
 
 .popupList {
     overflow-y: scroll;
-    max-height: 200px;
+    max-height: 500px;
     list-style-type: none;
     padding: 5px;
 }
 
 .popupList li {
     margin-bottom: 10px;
+}
+
+.popupList {
+    margin: 20px auto;
+    padding: 0;
+    list-style-type: none; /* Removes default list bullets */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.popupList li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold; /* Make text bold */
+}
+
+.popupList li:last-child {
+    border-bottom: none; /* Removes the bottom border from the last item */
+}
+
+.popupList li a {
+    color: #0056b3;
+    text-decoration: none; /* Removes the underline from links */
+}
+
+.popupList li a:hover {
+    text-decoration: underline; /* Adds an underline to links on hover */
 }
 
 .reviewerFinderPopup .popupHeader {
@@ -639,4 +668,44 @@ select {
 .folder_table .content-wrapper {
     max-height: 150px;
     overflow-y: auto;
+}
+
+ul {
+    list-style-type: none; /* Examples: disc, circle, square, none */
+}
+
+.eJPResults {
+    list-style-type: none; /* Removes default list bullets */
+    padding-left: 0; /* Removes default padding */
+    margin-top: 10px; /* Adds some space above the list */
+}
+
+.eJPResults li {
+    padding: 10px; /* Adds padding inside each list item */
+    margin-bottom: 10px; /* Adds space between list items */
+    border-radius: 5px; /* Rounds the corners of the list items */
+    display: flex; /* Enables flexbox layout */
+    align-items: center; /* Centers items vertically */
+    font-weight: normal;
+}
+
+.eJPResults li input[type="checkbox"] {
+    margin-right: 10px; /* Adds space between the checkbox and the text/content */
+}
+
+.eJPResults li a {
+    color: #007bff; /* Sets the link color */
+    text-decoration: none; /* Removes underline from links */
+}
+
+.eJPResults li a:hover {
+    text-decoration: underline; /* Adds underline on hover for better link visibility */
+}
+
+.matchingLi {
+    background-color: #f4ecec;
+    border: 0px solid #bdbbb8;
+    padding: 2px; /* Add some padding inside */
+    border-radius: 5px; /* Optionally round the corners */
+    font-weight: normal;
 }
