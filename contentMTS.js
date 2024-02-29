@@ -690,7 +690,7 @@ async function assignReviewer(
         }
 
         const data = await response.text(); // Or response.json() if the response is JSON.
-        console.log("Assignment successful:", data);
+        console.log("Assignment successful");
         // Handle successful assignment here
     } catch (error) {
         console.error("Error during assignment:", error);
@@ -699,6 +699,14 @@ async function assignReviewer(
 
 // when RF button clicked -> reviewerFinderPopup reviewerFinder
 function initiateRevFinding() {
+    // Generate a random number between 0 and 999
+    const randomNumber = Math.floor(Math.random() * 1000);
+
+    // Format the number to be three digits (e.g., 005, 034, 500)
+    const formattedNumber = randomNumber.toString().padStart(3, '0');
+
+    // Append or prepend the random number to the current page title
+    document.title = `${formattedNumber} Importing Reviewers`;
     const msDetailsRow = document.querySelector(
         "#ms_details_row_author_information"
     );
@@ -763,13 +771,16 @@ function initiateRevFinding() {
     reviewerFinder(
         findDataByText("Title"),
         authors,
-        findDataByText("Abstract")
+        findDataByText("Abstract"),
+        formattedNumber
+
     );
     reviewerFinderPopup();
 }
 
 // Construct a reviewer list popup after clicking Rev Finder button
 function reviewerFinderPopup() {
+
     // Create the popup container
     const popup = document.createElement("div");
     popup.className = "reviewerFinderPopup";
@@ -1077,10 +1088,10 @@ async function populatePopupList(fullName, lastName, email, inst) {
 }
 
 // Send a message to open a new RF tab
-function reviewerFinder(title, authors, abstract) {
+function reviewerFinder(title, authors, abstract, MTSid) {
     chrome.runtime.sendMessage({
         action: "openReviewerFinder",
-        data: { title, authors, abstract }
+        data: { title, authors, abstract, MTSid }
     });
 }
 

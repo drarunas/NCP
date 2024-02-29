@@ -27,6 +27,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                             function: prefillReviewerFinderForm,
                             args: [message.data] // Pass the data to the content script function
                         });
+                        
+                        
+                        
                     }
                 });
             }
@@ -87,8 +90,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // This function will be injected into the opened tab to prefill the form
 function prefillReviewerFinderForm(data) {
     // Assuming the page structure of reviewerfinder.nature.com allows direct DOM manipulation
-    const { title, authors, abstract } = data;
+    const { title, authors, abstract, MTSid } = data;
     document.querySelector("#paper_title").value = title;
     document.querySelector("#paper_authors").value = authors;
     document.querySelector("#paper_abstract").value = abstract;
+    let tabtitle = "Exporting Reviewers " + MTSid;
+    document.title = tabtitle;
 }
+
+
