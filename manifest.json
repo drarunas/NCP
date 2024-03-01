@@ -10,7 +10,9 @@
             ],
             "js": [
                 "jquery.js",
-                "contentMTS.js"
+                "contentMTS.js",
+                "appearance.js",
+                "helper_functions.js"
             ],
             "css": [
                 "custom.css"
@@ -22,7 +24,8 @@
             ],
             "js": [
                 "jquery.js",
-                "contentReviewerFinder.js"
+                "contentReviewerFinder.js",
+                "helper_functions.js"
             ],
             "css": [
                 "customRF.css"

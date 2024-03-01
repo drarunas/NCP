@@ -709,3 +709,80 @@ ul {
     border-radius: 5px; /* Optionally round the corners */
     font-weight: normal;
 }
+
+
+.shortlistcheck {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px; /* Custom size */
+    height: 20px; /* Custom size */
+    min-width: 20px; /* Custom size */
+    min-height: 20px; /* Custom size */
+    background-color: #f0f0f0; /* Light grey background */
+    border: 2px solid #d1d1d1; /* Grey border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+  }
+  
+  .shortlistcheck:checked {
+    background-color: #bed9bf; /* Change background color when checked */
+  }
+  
+
+  .dot-spinner {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 40px; /* Reduced height */
+  }
+  .dot-spinner div {
+    position: absolute;
+    top: 14px; /* Adjusted to center the dots vertically */
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: rgb(182, 144, 173);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .dot-spinner div:nth-child(1) {
+    left: 8px;
+    animation: dot-spinner1 0.6s infinite;
+  }
+  .dot-spinner div:nth-child(2) {
+    left: 8px;
+    animation: dot-spinner2 0.6s infinite;
+  }
+  .dot-spinner div:nth-child(3) {
+    left: 32px;
+    animation: dot-spinner2 0.6s infinite;
+  }
+  .dot-spinner div:nth-child(4) {
+    left: 56px;
+    animation: dot-spinner3 0.6s infinite;
+  }
+  @keyframes dot-spinner1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes dot-spinner3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes dot-spinner2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+  

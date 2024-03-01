@@ -55,3 +55,60 @@ button {
         transform: rotate(360deg);
     }
 }
+
+.dot-spinner {
+    display: inline-block;
+    position: relative;
+    width: 40px; /* Reduced width */
+    height: 15px; /* Reduced height */
+  }
+  .dot-spinner div {
+    position: absolute;
+    top: 6px; /* Adjusted to center the dots vertically in the new height */
+    width: 6px; /* Reduced dot size for proportionality */
+    height: 6px; /* Reduced dot size for proportionality */
+    border-radius: 50%;
+    background: rgb(100, 132, 147);
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+  .dot-spinner div:nth-child(1) {
+    left: 4px;
+    animation: dot-spinner1 0.6s infinite;
+  }
+  .dot-spinner div:nth-child(2) {
+    left: 4px;
+    animation: dot-spinner2 0.6s infinite;
+  }
+  .dot-spinner div:nth-child(3) {
+    left: 16px; /* Adjusted for new width */
+    animation: dot-spinner2 0.6s infinite;
+  }
+  .dot-spinner div:nth-child(4) {
+    left: 28px; /* Adjusted for new width */
+    animation: dot-spinner3 0.6s infinite;
+  }
+  @keyframes dot-spinner1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes dot-spinner3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+  @keyframes dot-spinner2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(12px, 0); /* Adjusted translation for reduced width */
+    }
+  }
+  

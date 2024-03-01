@@ -53,8 +53,9 @@ function processReviewerPanels() {
             assignButton.disabled = true;
 
             // Create and add spinner element
-            const spinner = document.createElement("div");
-            spinner.classList.add("spinner");
+            let spinner = document.createElement("div");
+            //spinner.classList.add("spinner");
+            spinner = createSpinner();
             assignButton.appendChild(spinner);
             sendReviewerDataToMtsTab(
                 reviewerName,
@@ -87,31 +88,44 @@ function sendReviewerDataToMtsTab(fullName, email, inst, uniqueId) {
 //listen for assignment completion messages from MTS
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "updateAssignmentStatus") {
-        const assignButton = document.querySelector(
-            `button[data-reviewer-id="${message.uniqueId}"]`
-        );
 
-        if (assignButton) {
-            // Remove spinner
-            const spinner = assignButton.querySelector(".spinner");
-            if (spinner) {
-                spinner.remove();
-            }
+        // Delay duration in milliseconds
+        const delay = 1000; // For a 1 second delay
 
-            // Update button text based on the operation result
-            if (message.status === "success") {
-                assignButton.textContent = "✅";
-                assignButton.classList.add("button-disabled");
-            } else if (message.status === "error") {
-                assignButton.textContent = "Error";
-                assignButton.classList.add("button-error");
-            }
+        setTimeout(() => {
+            const assignButton = document.querySelector(
+                `button[data-reviewer-id="${message.uniqueId}"]`
+            );
 
-            // Optionally, you can fully disable the button or adjust its appearance further
-            assignButton.disabled = true;
-        }
-    }
+            if (assignButton) {
+                // Remove spinner
+                const spinner = assignButton.querySelector(".spinner");
+                if (spinner) {
+                    spinner.remove();
+                }
+
+                // Update button text based on the operation result
+                if (message.status === "success") {
+                    assignButton.textContent = "✅";
+                    assignButton.classList.add("button-disabled");
+                } else if (message.status === "error") {
+                    assignButton.textContent = "Error";
+                    assignButton.classList.add("button-error");
+                }
+
+                // Optionally, you can fully disable the button or adjust its appearance further
+                assignButton.disabled = true;
+            };
+
+            // You can add your code that uses assignButton here
+            // For example, adding an event listener or manipulating the button
+        }, delay);
+
+
+    };
+
 });
+
 
 $(document).ready(function () {
     // Instantiate the MutationObserver
