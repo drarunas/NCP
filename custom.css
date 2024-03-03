@@ -6,12 +6,16 @@
 
 body {
     display: grid;
-    place-items: center; /* Shortcut for align-items and justify-items */
-    min-height: 10vh; /* Ensures the body takes at least the full height of the viewport */
-    margin: 0; /* Removes the default margin */
+    place-items: center;
+    /* Shortcut for align-items and justify-items */
+    min-height: 10vh;
+    /* Ensures the body takes at least the full height of the viewport */
+    margin: 0;
+    /* Removes the default margin */
     background-color: #f7f9fb;
     margin-top: 50px;
-    grid-template-columns: 1fr; /* Example: sidebar and main content */
+    grid-template-columns: 1fr;
+    /* Example: sidebar and main content */
     gap: 20px;
 }
 
@@ -32,52 +36,63 @@ TD {
     color: #223240;
     font-family: "Roboto", sans-serif;
 }
+
 TR {
     font-size: 16px;
     color: #223240;
     font-family: "Roboto", sans-serif;
 }
+
 .BODY {
     font-size: 16px;
     color: #223240;
     font-family: "Roboto", sans-serif;
 }
+
 A {
     color: #223240;
 }
+
 A:visited {
     color: #223240;
 }
+
 A:hover {
     color: #223240;
 }
+
 A.nav {
     font-weight: bold;
     font-size: 14px;
     color: #ffffff;
     text-decoration: none;
 }
+
 A.nav:visited {
     font-weight: bold;
     font-size: 14px;
     color: #ffffff;
     text-decoration: none;
 }
+
 A.nav:hover {
     font-weight: bold;
     font-size: 14px;
     color: #333333;
     text-decoration: none;
 }
+
 .navOff {
     font-weight: bold;
     font-size: 14px;
     color: #666666;
     text-decoration: none;
 }
+
 TD.ncommsbg {
     background-color: #e63023;
 }
+
 TR.ncommsbg {
     background-color: #e63023;
 }
@@ -85,123 +100,153 @@ TR.ncommsbg {
 TD.ncommsbglt {
     background-color: #8a999e;
 }
+
 TD.navlt {
     background-color: #cccccc;
 }
+
 TR.navlt {
     background-color: #cccccc;
 }
+
 TD.navdk {
     background-color: #333333;
 }
+
 TR.navdk {
     background-color: #333333;
 }
+
 TD.navbg {
     background-color: #999999;
 }
+
 TR.navbg {
     background-color: #999999;
 }
+
 TD.footer {
     font-weight: normal;
     font-size: 14px;
     color: #999999;
     text-decoration: none;
 }
+
 A.footer {
     font-weight: bold;
     font-size: 14px;
     color: #999999;
     text-decoration: none;
 }
+
 A.footer:visited {
     font-weight: bold;
     font-size: 14px;
     color: #999999;
     text-decoration: none;
 }
+
 A.footer:hover {
     font-weight: bold;
     font-size: 14px;
     color: #333333;
     text-decoration: none;
 }
+
 .openacctbg {
     background-color: #ffcc33;
 }
+
 .TEXT {
     color: #000000;
 }
+
 .TTS {
     font-weight: bold;
     color: #666666;
 }
+
 .TTS2 {
     font-size: 14px;
 }
+
 .TES {
     font-size: 14px;
     color: #ff0000;
 }
+
 .TRS {
     font-size: 10px;
 }
+
 .SMALL1 {
     font-size: 10px;
 }
+
 .SMALL2 {
     font-size: 10px;
 }
+
 .SMALL3 {
     font-size: 10px;
 }
+
 .GUTTER1 {
     font-size: 12px;
     color: #ffcc66;
 }
+
 .REDN {
     font-weight: normal;
     font-size: 10px;
     color: #ff3300;
 }
+
 .JLBBL {
     font-size: 9px;
     color: #f7efce;
     background-color: #530d21;
 }
+
 .JLB1 {
     font-size: 18pt;
     color: #530d21;
     background-color: #f7efce;
 }
+
 .MBC2 {
     font-size: 9px;
     color: #ffffff;
     background-color: #004080;
 }
+
 .WH {
     font-size: 9px;
     color: #530d21;
 }
+
 .GUTTER2 {
     font-size: 11px;
     color: #ffffff;
 }
+
 .GUTTER3 {
     font-size: 11px;
     color: #ccccff;
 }
+
 A.BAR {
     font-size: 11px;
     color: #ffffff;
     text-decoration: none;
 }
+
 A.HELPBAR {
     font-size: 11px;
     color: #000000;
     text-decoration: none;
 }
+
 A.GUTTER1 {
     font-weight: normal;
     font-size: 12px;
@@ -211,74 +256,91 @@ A.GUTTER1 {
     font-variant: normal;
     text-decoration: none;
 }
+
 A.GUTTER2 {
     font-size: 11px;
     color: #ffffff;
     text-decoration: none;
 }
+
 A.SP {
     font-size: 11px;
     text-decoration: none;
 }
+
 A.ND {
     text-decoration: none;
 }
+
 A.H1 {
     font-weight: bold;
     font-size: 18pt;
     color: #000000;
     text-decoration: none;
 }
+
 A.H6 {
     font-weight: bold;
     font-size: 10pt;
     color: #000000;
     text-decoration: none;
 }
+
 H1 {
     font-weight: bold;
     font-size: 18px;
 }
+
 .H1 {
     font-weight: bold;
     font-size: 18px;
 }
+
 H2 {
     font-weight: bold;
     font-size: 16px;
 }
+
 .H2 {
     font-weight: bold;
     font-size: 16px;
 }
+
 H3 {
     font-weight: bold;
     font-size: 14px;
 }
+
 .H3 {
     font-weight: bold;
     font-size: 14px;
 }
+
 H4 {
     font-weight: bold;
     font-size: 12px;
 }
+
 .H4 {
     font-weight: bold;
     font-size: 12px;
 }
+
 H5 {
     font-weight: bold;
     font-size: 11px;
 }
+
 .H5 {
     font-weight: bold;
     font-size: 11px;
 }
+
 H6 {
     font-weight: bold;
     font-size: 10px;
 }
+
 .H6 {
     font-weight: bold;
     font-size: 10px;
@@ -327,9 +389,12 @@ input {
     background-color: #ececec;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    border-radius: 3px; /* Adjust the border radius for a less square shape */
-    padding: 5px 5x; /* Adjust the padding for better button appearance */
-    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border-radius: 3px;
+    /* Adjust the border radius for a less square shape */
+    padding: 5px 5x;
+    /* Adjust the padding for better button appearance */
+    cursor: pointer;
+    /* Add cursor pointer to indicate interactivity */
     border-width: 1px;
 }
 
@@ -338,9 +403,12 @@ input[type="submit"] {
     background-color: antiquewhite;
     font-family: "Roboto", sans-serif;
     font-size: 12px;
-    border-radius: 5px; /* Adjust the border radius for a less square shape */
-    padding: 8px 12px; /* Adjust the padding for better button appearance */
-    cursor: pointer; /* Add cursor pointer to indicate interactivity */
+    border-radius: 5px;
+    /* Adjust the border radius for a less square shape */
+    padding: 8px 12px;
+    /* Adjust the padding for better button appearance */
+    cursor: pointer;
+    /* Add cursor pointer to indicate interactivity */
     margin: 2px;
     border: none;
 }
@@ -381,38 +449,53 @@ input[type="submit"] {
 /* Buttons */
 button {
     font-family: "Roboto", sans-serif;
-    font-size: 12px; /* Adjust the font size as needed */
-    border-radius: 5px; /* Adjust the border radius for a less square shape */
-    padding: 8px 12px; /* Adjust the padding for better button appearance */
-    cursor: pointer; /* Add cursor pointer to indicate interactivity */
-    border: none; /* Remove default button border */
+    font-size: 12px;
+    /* Adjust the font size as needed */
+    border-radius: 5px;
+    /* Adjust the border radius for a less square shape */
+    padding: 8px 12px;
+    /* Adjust the padding for better button appearance */
+    cursor: pointer;
+    /* Add cursor pointer to indicate interactivity */
+    border: none;
+    /* Remove default button border */
     background-color: antiquewhite;
 }
 
 select {
     font-family: "Roboto", sans-serif;
-    font-size: 14px; /* Adjust the font size as needed */
-    border-radius: 4px; /* Adjust the border radius for a less square shape */
-    padding: 4px 6px; /* Adjust the padding for better appearance */
-    cursor: pointer; /* Add cursor pointer to indicate interactivity */
-    border: 1px solid #ccc; /* Add a border to improve visibility */
-    background-color: #fff; /* Set background color */
+    font-size: 14px;
+    /* Adjust the font size as needed */
+    border-radius: 4px;
+    /* Adjust the border radius for a less square shape */
+    padding: 4px 6px;
+    /* Adjust the padding for better appearance */
+    cursor: pointer;
+    /* Add cursor pointer to indicate interactivity */
+    border: 1px solid #ccc;
+    /* Add a border to improve visibility */
+    background-color: #fff;
+    /* Set background color */
 }
 
 #ms_brief_table,
 #ms_brief_table td,
 #ms_brief_table th,
 #ms_brief_table tr {
-    border: none !important; /* Remove the border */
-    background-color: #ffffff; /* Set background color */
+    border: none !important;
+    /* Remove the border */
+    background-color: #ffffff;
+    /* Set background color */
     padding: 5px;
     border-radius: 5px;
     margin: auto;
 }
 
 #ms_brief_table {
-    border: none !important; /* Remove the border */
-    background-color: #ffffff; /* Set background color */
+    border: none !important;
+    /* Remove the border */
+    background-color: #ffffff;
+    /* Set background color */
     padding: 5px;
     border-radius: 5px;
     margin: auto;
@@ -462,22 +545,27 @@ select {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #f6f6f6;
-    padding: 15px; /* Adjusted to account for inner content padding */
+    background-color: #e3e3e3;
+    padding: 15px;
+    /* Adjusted to account for inner content padding */
     border-radius: 5px;
     box-shadow: 0 6px 6px rgba(0, 0, 0, 0.3);
     z-index: 10001;
-    width: 80%; /* Adjust width as needed */
+    width: 80%;
+    /* Adjust width as needed */
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Prevent the main container from scrolling */
+    overflow: hidden;
+    /* Prevent the main container from scrolling */
 }
 
 /* Scrollable Content Area */
 .popupContent {
-    overflow-y: auto; /* Enable vertical scrolling for the content */
-    margin-top: 30px; /* Space for the close button */
+    overflow-y: auto;
+    /* Enable vertical scrolling for the content */
+    margin-top: 30px;
+    /* Space for the close button */
 }
 
 /* Close Button */
@@ -495,43 +583,63 @@ select {
     left: 50%;
     transform: translateX(-50%);
     z-index: 10000;
-    background: white;
-    padding: 10px;
+    background: rgb(243, 243, 243);
+    padding: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
-    max-width: 650px; /* Adjust this value as needed */
+    max-width: 650px;
+    max-height: 50px;
     width: 100%;
     box-sizing: border-box;
+    align-items: center;
+    /* Align children vertically in the center */
+
 }
 
 #searchInput {
-    width: calc(100% - 120px); /* Adjust based on the button width */
-    padding: 2px;
+    width: calc(100% - 140px);
+    height: 100%;
+    margin-right: 5px;
+    padding: 10px;
 }
 
 #searchBtn {
-    width: 120px; /* Adjust as needed */
-    margin-left: 10px; /* Spacing between input and button */
+    width: 120px;
+    /* Adjust as needed */
+    margin-left: 5px;
+    /* Spacing between input and button */
 }
 
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1); /* Lighter border for the whole spinner */
-    border-top: 4px solid #3498db; /* Typically a darker or more vibrant color for the animated part */
-    border-radius: 50%; /* This ensures the spinner is circular */
-    width: 15px; /* Width of the spinner */
-    height: 15px; /* Height of the spinner, equal to width for a circle */
-    animation: spin 2s linear infinite; /* Adjust animation as needed */
-    display: inline-block; /* Adjust display as needed, depending on layout */
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    /* Lighter border for the whole spinner */
+    border-top: 4px solid #3498db;
+    /* Typically a darker or more vibrant color for the animated part */
+    border-radius: 50%;
+    /* This ensures the spinner is circular */
+    width: 10px;
+    /* Width of the spinner */
+    height: 10px;
+    /* Height of the spinner, equal to width for a circle */
+    animation: spin 2s linear infinite;
+    /* Adjust animation as needed */
+    display: inline-block;
+    /* Adjust display as needed, depending on layout */
 }
+
 #myExtensionSearchBox .spinner {
-    flex: 0 0 auto; /* Prevents the spinner from growing or shrinking */
+    vertical-align: middle;
+    flex: 0 0 auto;
+    /* Prevents the spinner from growing or shrinking */
+
 }
 
 @keyframes spin {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -542,7 +650,8 @@ select {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 15px; /* Adjust size as needed */
+    font-size: 15px;
+    /* Adjust size as needed */
     margin-right: 2px;
 }
 
@@ -553,6 +662,7 @@ select {
     max-width: 90%;
     border-radius: 5px;
 }
+
 .stickynote {
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
@@ -562,7 +672,7 @@ select {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #f0f0f0;
+    background-color: #e6e6e6f8;
     padding: 20px;
     z-index: 1000;
     border: 0px solid #ccc;
@@ -581,75 +691,123 @@ select {
     padding: 5px;
 }
 
-.popupList li {
-    margin-bottom: 10px;
+.popupList li.has-nested-ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    /* This may need adjustment based on desired layout */
 }
+
+
 
 .popupList {
     margin: 20px auto;
     padding: 0;
-    list-style-type: none; /* Removes default list bullets */
+    list-style-type: none;
+    /* Removes default list bullets */
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
 .popupList li {
+    display: flex;
+    align-items: center;
+    /* This will vertically center the checkbox and text */
     padding: 10px 20px;
     border-bottom: 1px solid #eee;
-    font-weight: bold; /* Make text bold */
+    font-weight: bold;
+    /* Make text bold */
+    margin-bottom: 10px;
+}
+
+.popupList li span,
+.popupList li a {
+    display: inline-block;
+    /* Ensures inline behavior, adjust as necessary */
+    vertical-align: middle;
+    /* Aligns text with the checkbox */
 }
 
 .popupList li:last-child {
-    border-bottom: none; /* Removes the bottom border from the last item */
+    border-bottom: none;
+    /* Removes the bottom border from the last item */
 }
 
 .popupList li a {
     color: #0056b3;
-    text-decoration: none; /* Removes the underline from links */
+    text-decoration: none;
+    /* Removes the underline from links */
 }
 
 .popupList li a:hover {
-    text-decoration: underline; /* Adds an underline to links on hover */
+    text-decoration: underline;
+    /* Adds an underline to links on hover */
+}
+
+
+.firstLineDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.shortlistcheck,
+.popupList li span {
+    vertical-align: middle;
 }
 
 .reviewerFinderPopup .popupHeader {
-    display: flex; /* Enables flexbox layout */
-    align-items: center; /* Vertically centers the title and button */
-    justify-content: space-between; /* Spaces title and button */
+    display: flex;
+    /* Enables flexbox layout */
+    align-items: center;
+    /* Vertically centers the title and button */
+    justify-content: space-between;
+    /* Spaces title and button */
 }
 
 .reviewerFinderPopup .popupTitle {
-    margin: 0; /* Removes default margin */
-    flex-grow: 1; /* Allows the title to take up available space */
+    margin: 0;
+    /* Removes default margin */
+    flex-grow: 1;
+    /* Allows the title to take up available space */
 }
 
 .reviewerFinderPopup .popupCloseButton {
-    margin-left: 20px; /* Adds some space between the title and the button */
-    cursor: pointer; /* Changes cursor to pointer on hover */
+    margin-left: 20px;
+    /* Adds some space between the title and the button */
+    cursor: pointer;
+    /* Changes cursor to pointer on hover */
 }
 
 .contact_pot_revs_table {
-    background-color: #fffef6; /* Lightest pink background for the table */
-    border-collapse: collapse; /* Removes the borders */
+    background-color: #fffef6;
+    /* Lightest pink background for the table */
+    border-collapse: collapse;
+    /* Removes the borders */
 }
 
 .contact_pot_revs_table th,
 .contact_pot_revs_table td {
-    padding: 4px; /* Padding inside each table cell and header */
+    padding: 4px;
+    /* Padding inside each table cell and header */
 }
 
 .contact_pot_revs_table tr:nth-child(odd) {
-    background-color: #f2f1ee; /* Light purple for odd rows */
+    background-color: #f2f1ee;
+    /* Light purple for odd rows */
 }
 
 .contact_pot_revs_table tr:first-child {
-    background-color: #fff7ea; /* Light peach for the header row */
+    background-color: #fff7ea;
+    /* Light peach for the header row */
 }
 
 .other-tasks-table {
     border-collapse: collapse;
-    display: block; /* Block display to respect width settings */
+    display: block;
+    /* Block display to respect width settings */
     border-collapse: collapse;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -662,7 +820,8 @@ select {
 }
 
 .other-tasks-table td {
-    word-break: break-all !important; /* This will break the URL at any character to ensure it fits within its container */
+    word-break: break-all !important;
+    /* This will break the URL at any character to ensure it fits within its container */
 }
 
 .folder_table .content-wrapper {
@@ -671,42 +830,57 @@ select {
 }
 
 ul {
-    list-style-type: none; /* Examples: disc, circle, square, none */
+    list-style-type: none;
+    /* Examples: disc, circle, square, none */
 }
 
 .eJPResults {
-    list-style-type: none; /* Removes default list bullets */
-    padding-left: 0; /* Removes default padding */
-    margin-top: 10px; /* Adds some space above the list */
+    list-style-type: none;
+    /* Removes default list bullets */
+    padding-left: 0;
+    /* Removes default padding */
+    margin-top: 10px;
+    /* Adds some space above the list */
 }
 
 .eJPResults li {
-    padding: 10px; /* Adds padding inside each list item */
-    margin-bottom: 10px; /* Adds space between list items */
-    border-radius: 5px; /* Rounds the corners of the list items */
-    display: flex; /* Enables flexbox layout */
-    align-items: center; /* Centers items vertically */
+    padding: 10px;
+    /* Adds padding inside each list item */
+    margin-bottom: 10px;
+    /* Adds space between list items */
+    border-radius: 5px;
+    /* Rounds the corners of the list items */
+    display: flex;
+    /* Enables flexbox layout */
+    align-items: center;
+    /* Centers items vertically */
     font-weight: normal;
 }
 
 .eJPResults li input[type="checkbox"] {
-    margin-right: 10px; /* Adds space between the checkbox and the text/content */
+    margin-right: 10px;
+    /* Adds space between the checkbox and the text/content */
 }
 
 .eJPResults li a {
-    color: #007bff; /* Sets the link color */
-    text-decoration: none; /* Removes underline from links */
+    color: #007bff;
+    /* Sets the link color */
+    text-decoration: none;
+    /* Removes underline from links */
 }
 
 .eJPResults li a:hover {
-    text-decoration: underline; /* Adds underline on hover for better link visibility */
+    text-decoration: underline;
+    /* Adds underline on hover for better link visibility */
 }
 
 .matchingLi {
     background-color: #f4ecec;
     border: 0px solid #bdbbb8;
-    padding: 2px; /* Add some padding inside */
-    border-radius: 5px; /* Optionally round the corners */
+    padding: 2px;
+    /* Add some padding inside */
+    border-radius: 5px;
+    /* Optionally round the corners */
     font-weight: normal;
 }
 
@@ -715,74 +889,212 @@ ul {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 20px; /* Custom size */
-    height: 20px; /* Custom size */
-    min-width: 20px; /* Custom size */
-    min-height: 20px; /* Custom size */
-    background-color: #f0f0f0; /* Light grey background */
-    border: 2px solid #d1d1d1; /* Grey border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-  }
-  
-  .shortlistcheck:checked {
-    background-color: #bed9bf; /* Change background color when checked */
-  }
-  
+    width: 20px;
+    /* Custom size */
+    height: 20px;
+    /* Custom size */
+    min-width: 20px;
+    /* Custom size */
+    min-height: 20px;
+    /* Custom size */
+    background-color: #f0f0f0;
+    /* Light grey background */
+    border: 2px solid #d1d1d1;
+    /* Grey border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
 
-  .dot-spinner {
+.shortlistcheck:checked {
+    background-color: #bed9bf;
+    /* Change background color when checked */
+}
+
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    /* Custom size */
+    height: 20px;
+    /* Custom size */
+    min-width: 20px;
+    /* Custom size */
+    min-height: 20px;
+    /* Custom size */
+    background-color: #f0f0f0;
+    /* Light grey background */
+    border: 2px solid #d1d1d1;
+    /* Grey border */
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
+
+input[type="checkbox"]:checked {
+    background-color: #bed9bf;
+    /* Style for checked state */
+}
+
+.dot-spinner {
     display: inline-block;
     position: relative;
     width: 80px;
-    height: 40px; /* Reduced height */
-  }
-  .dot-spinner div {
+    height: 20px;
+    /* Reduced height */
+}
+
+.dot-spinner div {
     position: absolute;
-    top: 14px; /* Adjusted to center the dots vertically */
+    top: 8px;
+    /* Adjusted to center the dots vertically */
     width: 13px;
     height: 13px;
     border-radius: 50%;
-    background: rgb(182, 144, 173);
+    background: rgb(188, 188, 188);
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  .dot-spinner div:nth-child(1) {
+}
+
+.dot-spinner div:nth-child(1) {
     left: 8px;
     animation: dot-spinner1 0.6s infinite;
-  }
-  .dot-spinner div:nth-child(2) {
+}
+
+.dot-spinner div:nth-child(2) {
     left: 8px;
     animation: dot-spinner2 0.6s infinite;
-  }
-  .dot-spinner div:nth-child(3) {
+}
+
+.dot-spinner div:nth-child(3) {
     left: 32px;
     animation: dot-spinner2 0.6s infinite;
-  }
-  .dot-spinner div:nth-child(4) {
+}
+
+.dot-spinner div:nth-child(4) {
     left: 56px;
     animation: dot-spinner3 0.6s infinite;
-  }
-  @keyframes dot-spinner1 {
+}
+
+@keyframes dot-spinner1 {
     0% {
-      transform: scale(0);
+        transform: scale(0);
     }
+
     100% {
-      transform: scale(1);
+        transform: scale(1);
     }
-  }
-  @keyframes dot-spinner3 {
+}
+
+@keyframes dot-spinner3 {
     0% {
-      transform: scale(1);
+        transform: scale(1);
     }
+
     100% {
-      transform: scale(0);
+        transform: scale(0);
     }
-  }
-  @keyframes dot-spinner2 {
+}
+
+@keyframes dot-spinner2 {
     0% {
-      transform: translate(0, 0);
+        transform: translate(0, 0);
     }
+
     100% {
-      transform: translate(24px, 0);
+        transform: translate(24px, 0);
     }
-  }
-  
+}
+
+
+
+
+/* Overlay styles */
+.loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.733);
+    /* Semi-transparent black background */
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+/* Loader div styles */
+.loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0px;
+    height: 0px;
+    border-radius: 100%;
+    opacity: 0;
+    border: 5px solid rgb(216, 101, 195);
+    animation: anim 4s infinite linear;
+}
+
+/* Loader animation */
+@keyframes anim {
+    0% {
+        opacity: 0.0;
+        width: 0vmin;
+        height: 0vmin;
+    }
+
+    10% {
+        opacity: 0.2;
+    }
+
+    100% {
+        opacity: 0.0;
+        width: 100vmin;
+        height: 100vmin;
+    }
+}
+
+/* Animation delay for each loader div */
+.loader:nth-child(1) {
+    animation-delay: 200ms;
+}
+
+.loader:nth-child(2) {
+    animation-delay: 400ms;
+}
+
+.loader:nth-child(3) {
+    animation-delay: 600ms;
+}
+
+.loader:nth-child(4) {
+    animation-delay: 800ms;
+}
+
+.loader:nth-child(5) {
+    animation-delay: 1000ms;
+}
+
+.loader:nth-child(6) {
+    animation-delay: 1200ms;
+}
+
+.loader:nth-child(7) {
+    animation-delay: 1400ms;
+}
+
+.loader:nth-child(8) {
+    animation-delay: 1600ms;
+}
+
+.loader:nth-child(9) {
+    animation-delay: 1800ms;
+}

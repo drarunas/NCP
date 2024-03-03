@@ -53,7 +53,7 @@ async function assignReviewer(reviewerId, jId, msId, msRevNo, msIdKey, currentSt
 function initiateRevFinding() {
     const randomNumber = Math.floor(Math.random() * 1000);
     const formattedNumber = randomNumber.toString().padStart(3, '0');
-    document.title = `${formattedNumber} Importing Reviewers`;
+    document.title = `↙️ ${formattedNumber} Importing Reviewers`;
     const msDetailsRow = document.querySelector(
         "#ms_details_row_author_information"
     );
@@ -166,15 +166,20 @@ function reviewerFinderPopup() {
     assignButton.textContent = "Assign Selected";
     assignButton.className = "popupCloseButton";
     assignButton.onclick = function () {
+
+        const loaderOverlay = createLoaderOverlay();
+        popup.appendChild(loaderOverlay); // Assuming 'popup' is your popup container
         // 1. Create and insert the spinner
-        const spinner = createSpinner();
-        assignButton.parentNode.replaceChild(spinner, assignButton);
+        //const spinner = createSpinner();
+        assignButton.parentNode.removeChild(assignButton);
         list.style.opacity = "0.5";
         list.style.backgroundColor = "#f0f0f0"; // Light gray background
+
 
         const checkboxes = document.querySelectorAll(
             '.popupList input[type="checkbox"]:checked'
         );
+
         const operationPromises = [];
 
         checkboxes.forEach((checkbox) => {
@@ -218,6 +223,9 @@ function reviewerFinderPopup() {
                     "An error occurred during the assignments:",
                     error
                 );
+            }).finally(() => {
+                // Remove the loader overlay when done
+                popup.removeChild(loaderOverlay);
             });
     };
 
@@ -249,13 +257,20 @@ async function addToShortList(fullName, lastName, email, inst) {
 
     // list item for a record added from RF:
     const item = document.createElement("li");
+    item.classList.add("has-nested-ul");
+
+    
+    const firstLineDiv = document.createElement("div");
+    firstLineDiv.classList.add("firstLineDiv");
+
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.value = email;
     checkbox.classList.add("shortlistcheck");
 
     checkbox.setAttribute("data-status", "new");
-    item.appendChild(checkbox);
+    //item.appendChild(checkbox);
+    firstLineDiv.appendChild(checkbox);
 
     // Create a span for the text content
     const firstLine = document.createElement("span");
@@ -267,7 +282,11 @@ async function addToShortList(fullName, lastName, email, inst) {
     checkbox.setAttribute("data-lname", lastName);
     checkbox.setAttribute("data-email", email);
     checkbox.setAttribute("data-inst", inst);
-    item.appendChild(firstLine);
+
+    //item.appendChild(firstLine);
+    firstLineDiv.appendChild(firstLine);
+    item.appendChild(firstLineDiv);
+
     list.appendChild(item);
 
     // Create a second line container for the eJP search results using the above li
@@ -276,7 +295,6 @@ async function addToShortList(fullName, lastName, email, inst) {
 
     // Add spinner to the second line
     const spinner = createSpinner();
-    
     secondLine.appendChild(spinner);
 
     try {
@@ -298,14 +316,15 @@ async function addToShortList(fullName, lastName, email, inst) {
             if (!searchDataByEmail || searchDataByEmail.length === 0) {
                 const emailnotfoundtext = document.createElement("li");
                 emailnotfoundtext.textContent = "❌ Email not on eJP";
+                console.log("email not on eJP");
                 resultsList.appendChild(emailnotfoundtext);
                 checkbox.checked = true;
             }
 
             // Combine the two arrays
-            const combinedData = searchData.concat(searchDataByEmail);
-
+            const combinedData = searchData.concat(searchDataByEmail).filter(element => element !== null);;
             // Filter duplicates based on authId
+            console.log(combinedData);
             const uniqueCombinedData = Array.from(new Map(combinedData.map(item => [item['authId'], item])).values());
 
             // Convert forEach loop to for...of to handle async operations

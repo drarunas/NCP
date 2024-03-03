@@ -213,3 +213,21 @@ function createSpinner() {
     }
     return spinner;
 }
+
+
+// Function to create the loader overlay
+function createLoaderOverlay() {
+    // Create the overlay with a specific class for styling
+    const overlay = document.createElement("div");
+    overlay.className = 'loader-overlay'; // Add a class for the overlay
+
+    // Create and append the divs for the loader
+    for (let i = 0; i < 9; i++) {
+        const div = document.createElement("div");
+        div.className = 'loader'; // Add a class for loader divs
+        overlay.appendChild(div);
+    }
+
+    return overlay;
+}
+

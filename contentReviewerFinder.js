@@ -42,7 +42,7 @@ function processReviewerPanels() {
 
         // Insert "Assign" button
         const assignButton = document.createElement("button");
-        assignButton.textContent = "➡️ Assign";
+        assignButton.textContent = "↖️ Add to eJP shortlist";
         assignButton.dataset.reviewerId = uniqueId;
         assignButton.classList.add("assign-reviewer-btn"); // Add class for styling if needed
 
