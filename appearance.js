@@ -6,7 +6,28 @@ scriptElement.onload = function () {
     this.remove(); // Clean up after injection
 };
 (document.head || document.documentElement).appendChild(scriptElement);
-
+//change fav icon
+(function() {
+    const emoji = '🌸'; // The emoji you want to use
+    const canvas = document.createElement('canvas');
+    canvas.width = 64; // Size of the favicon
+    canvas.height = 64; // Make sure it's square
+    const ctx = canvas.getContext('2d');
+    // ctx.fillStyle = 'white'; // Skip this to keep the background transparent
+    // ctx.fillRect(0, 0, canvas.width, canvas.height); // And skip this as well
+    ctx.font = '56px serif'; // Adjust font size as needed
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(emoji, canvas.width / 2, canvas.height / 2);
+  
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = canvas.toDataURL('image/png'); // Converts the canvas to a data URL
+    document.getElementsByTagName('head')[0].appendChild(link);
+  })();
+  
+  
 // REMOVING DEFAULT CSS
 if (host.includes("mts-ncomms.nature.com")) {
     console.log("removing css");
