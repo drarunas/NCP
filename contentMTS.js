@@ -1,3 +1,5 @@
+
+
 function showResultsPopup(data) {
     // Create the main popup container
     const resultsDiv = document.createElement("div");
@@ -93,7 +95,7 @@ function initiateRevFinding() {
     };
 
     // Extract, clean, and process the author information
-    let contributingAuthorsText = findDataByText("Contributing Authors");
+    let contributingAuthorsText = findDataByText("Contributing Author");
     let correspondingAuthorText = findDataByText("Corresponding Author");
 
     contributingAuthorsText = cleanText(contributingAuthorsText);

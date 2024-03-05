@@ -231,3 +231,12 @@ function createLoaderOverlay() {
     return overlay;
 }
 
+function blinkButton(selector, times) {
+    $(selector).css('animation-iteration-count', times * 2); // Each blink is a cycle of appearing and disappearing, hence times * 2
+    $(selector).addClass("blink");
+
+    // Optional: Remove the class after the animation ends, if you don't want the style to persist
+    setTimeout(() => {
+        $(selector).removeClass("blink");
+    }, times * 1000 * 2); // Duration should match the CSS animation-duration * number of blinks
+}

@@ -7,7 +7,7 @@ scriptElement.onload = function () {
 };
 (document.head || document.documentElement).appendChild(scriptElement);
 //change fav icon
-(function() {
+(function () {
     const emoji = '🌸'; // The emoji you want to use
     const canvas = document.createElement('canvas');
     canvas.width = 64; // Size of the favicon
@@ -19,15 +19,15 @@ scriptElement.onload = function () {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(emoji, canvas.width / 2, canvas.height / 2);
-  
+
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = canvas.toDataURL('image/png'); // Converts the canvas to a data URL
     document.getElementsByTagName('head')[0].appendChild(link);
-  })();
-  
-  
+})();
+
+
 // REMOVING DEFAULT CSS
 if (host.includes("mts-ncomms.nature.com")) {
     console.log("removing css");
@@ -227,12 +227,18 @@ $(document).ready(function () {
 
 
 // Add search bar on top of page
-if (host.includes("mts-ncomms.nature.com")) {
-    // SEARCH BOX ON TOP OF PAGE
 
-    document.body.insertAdjacentHTML(
-        "afterbegin",
-        `
+function addTopBar() {
+
+    // SEARCH BOX ON TOP OF PAGE
+    if (host.includes("mts-ncomms.nature.com")) {
+        console.log("Adding top bar");
+        // SEARCH BOX ON TOP OF PAGE
+
+
+        document.body.insertAdjacentHTML(
+            "afterbegin",
+            `
 <div id="myExtensionSearchBox">
   <button id="homeBtn" class="topButtons" title="Home">🏠</button>
   <button id="initialAssessmentBtn" class="topButtons" title="Initial assessment">📃</button>
@@ -241,175 +247,134 @@ if (host.includes("mts-ncomms.nature.com")) {
   <button id="allBtn" class="topButtons" title="All">📁</button>
   <input type="text" id="searchInput" placeholder="🐳 Last Name or MS#">
   <div id="spinner" class="spinner" style="display: none;"></div>
-  <button id="searchBtn">🍁Search</button>
+  <button id="searchBtn" class="topBtn">🍁Search</button>
 </div>
 
 `
-    );
+        );
 
-    document
-        .getElementById("searchInput")
-        .addEventListener("keydown", function (event) {
-            if (event.key === "Enter") {
-                // Checks if the key pressed is the Enter key
-                event.preventDefault(); // Prevents the default action of the enter key (submitting the form)
+        document
+            .getElementById("searchInput")
+            .addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    // Checks if the key pressed is the Enter key
+                    event.preventDefault(); // Prevents the default action of the enter key (submitting the form)
 
-                // Trigger the search functionality
-                const searchTerm = document.getElementById("searchInput").value;
-                // Show the spinner
-                document.getElementById("spinner").style.display =
-                    "inline-block"; // Show spinner
+                    // Trigger the search functionality
+                    const searchTerm = document.getElementById("searchInput").value;
+                    // Show the spinner
+                    document.getElementById("spinner").style.display =
+                        "inline-block"; // Show spinner
 
-                fetch("https://mts-ncomms.nature.com/cgi-bin/main.plex", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded; charset=UTF-8"
-                    },
-                    body: `form_type=tb_find_ms_or_person&j_id=18&search_pattern=${encodeURIComponent(
-                        searchTerm
-                    )}&time=${new Date().getTime()}`,
-                    credentials: "include"
-                })
-                    .then((response) => response.text())
-                    .then((data) => {
-                        // Hide the spinner
-                        document.getElementById("spinner").style.display =
-                            "none";
-                        // Process and display your results
-                        showResultsPopup(data);
+                    fetch("https://mts-ncomms.nature.com/cgi-bin/main.plex", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/x-www-form-urlencoded; charset=UTF-8"
+                        },
+                        body: `form_type=tb_find_ms_or_person&j_id=18&search_pattern=${encodeURIComponent(
+                            searchTerm
+                        )}&time=${new Date().getTime()}`,
+                        credentials: "include"
                     })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                        // Hide the spinner
-                        document.getElementById("spinner").style.display =
-                            "none";
-                    });
-            }
-        });
-
-    document.getElementById("searchBtn").addEventListener("click", function () {
-        const searchTerm = document.getElementById("searchInput").value;
-        // Show the spinner
-        document.getElementById("spinner").style.display = "inline-block"; // Show spinner
-
-        fetch("https://mts-ncomms.nature.com/cgi-bin/main.plex", {
-            method: "POST",
-            headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded; charset=UTF-8"
-            },
-            body: `form_type=tb_find_ms_or_person&j_id=18&search_pattern=${encodeURIComponent(
-                searchTerm
-            )}&search_popup_type=classic&time=${new Date().getTime()}`,
-            credentials: "include"
-        })
-            .then((response) => response.text())
-            .then((data) => {
-                // Hide the spinner
-                document.getElementById("spinner").style.display = "none";
-                // Process and display your results
-                showResultsPopup(data);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                // Hide the spinner
-                document.getElementById("spinner").style.display = "none";
+                        .then((response) => response.text())
+                        .then((data) => {
+                            // Hide the spinner
+                            document.getElementById("spinner").style.display =
+                                "none";
+                            // Process and display your results
+                            showResultsPopup(data);
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                            // Hide the spinner
+                            document.getElementById("spinner").style.display =
+                                "none";
+                        });
+                }
             });
-    });
 
-    document.getElementById("homeBtn").addEventListener("click", function () {
-        window.location.href =
-            "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=home";
-    });
-    document
-        .getElementById("initialAssessmentBtn")
-        .addEventListener("click", function () {
-            window.location.href =
-                "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=640ftdtJ1b9nNueyQ8JqGZ0WNA&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=AXE3O3eZ&folder_id=1200;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
-        });
+        document.getElementById("searchBtn").addEventListener("click", function () {
+            const searchTerm = document.getElementById("searchInput").value;
+            // Show the spinner
+            document.getElementById("spinner").style.display = "inline-block"; // Show spinner
 
-    document
-        .getElementById("decisionsBtn")
-        .addEventListener("click", function () {
-            window.location.href =
-                "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=362ftd9CeR2QzL3n7fxwEYe2Pelg&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=Aeo3O0eZ&folder_id=1600;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
-        });
-
-    document.getElementById("allBtn").addEventListener("click", function () {
-        window.location.href =
-            "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=835ftd4iFHDNZb7YjtRPDt6k11mA&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=Aig7O3eZ&folder_id=1800;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
-    });
-    document.getElementById("inboxBtn").addEventListener("click", function () {
-        window.location.href =
-            "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=155ftdNBIBwmImXZBgDmlrTX7Q&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=AdW7O3eZ&folder_id=1530;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
-    });
-}
-
-//ADDING BOTTOM BAR IF PAGE IS REV SEARCH
-function addMiniWindow() {
-    const miniWindowHTML = `
-        <div id="miniWindow" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #f0f0f0; padding: 10px; box-shadow: 0 -2px 5px rgba(0,0,0,0.2); display: flex; justify-content: center; gap: 10px;">
-            <input type="text" id="firstName" placeholder="First Name">
-            <input type="text" id="lastName" placeholder="Last Name">
-            <input type="email" id="email" placeholder="Email">
-            <input type="text" id="institution" placeholder="Institution">
-            <button id="searchButton">Search</button>
-            <button id="reviewerFinder">🔎 Reviewer Finder</button>
-        </div>
-    `;
-    document.body.insertAdjacentHTML("beforeend", miniWindowHTML);
-    document
-        .getElementById("searchButton")
-        .addEventListener("click", function () {
-
-            //TODO: replace this
-            const fname = document.getElementById("firstName").value.trim();
-            const lname = document.getElementById("lastName").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const inst = document.getElementById("institution").value.trim();
-            // get page parameters
-            const form = document.getElementById("nf_assign_rev");
-           
-            const { formType, jId, msId, msRevNo, msIdKey, ndt, currentStageId, desiredRevCnt } = getPageParams(form);
-
-            eJPPersonSearch(
-                fname,
-                lname,
-                email,
-                inst,
-                jId,
-                msId,
-                msRevNo,
-                msIdKey,
-                currentStageId,
-                desiredRevCnt
-            )
+            fetch("https://mts-ncomms.nature.com/cgi-bin/main.plex", {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: `form_type=tb_find_ms_or_person&j_id=18&search_pattern=${encodeURIComponent(
+                    searchTerm
+                )}&search_popup_type=classic&time=${new Date().getTime()}`,
+                credentials: "include"
+            })
+                .then((response) => response.text())
                 .then((data) => {
-                    if (data) {
-                        console.log("Extracted Data:", data);
-                        // Do something with the data
-                    } else {
-                        console.log("No data extracted.");
-                    }
+                    // Hide the spinner
+                    document.getElementById("spinner").style.display = "none";
+                    // Process and display your results
+                    showResultsPopup(data);
                 })
                 .catch((error) => {
-                    console.error("Error in eJPPersonSearch:", error);
+                    console.error("Error:", error);
+                    // Hide the spinner
+                    document.getElementById("spinner").style.display = "none";
                 });
         });
-    document
-        .getElementById("reviewerFinder")
-        .addEventListener("click", initiateRevFinding);
+
+        document.getElementById("homeBtn").addEventListener("click", function () {
+            window.location.href =
+                "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=home";
+        });
+        document
+            .getElementById("initialAssessmentBtn")
+            .addEventListener("click", function () {
+                window.location.href =
+                    "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=640ftdtJ1b9nNueyQ8JqGZ0WNA&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=AXE3O3eZ&folder_id=1200;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
+            });
+
+        document
+            .getElementById("decisionsBtn")
+            .addEventListener("click", function () {
+                window.location.href =
+                    "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=362ftd9CeR2QzL3n7fxwEYe2Pelg&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=Aeo3O0eZ&folder_id=1600;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
+            });
+
+        document.getElementById("allBtn").addEventListener("click", function () {
+            window.location.href =
+                "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=835ftd4iFHDNZb7YjtRPDt6k11mA&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=Aig7O3eZ&folder_id=1800;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
+        });
+        document.getElementById("inboxBtn").addEventListener("click", function () {
+            window.location.href =
+                "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=155ftdNBIBwmImXZBgDmlrTX7Q&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=AdW7O3eZ&folder_id=1530;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
+        });
+
+
+    }
 }
-//ADDING BOTTOM BAR IF PAGE IS REV SEARCH
-$(document).ready(function () {
-    if (document.getElementById("nf_assign_rev")) {
-        // The form exists, proceed with adding the mini window/bar
-        addMiniWindow();
-    } else {
-        console.log('Form with id "nf_assign_ref" not found.');
+
+$(document).ready(function() {
+    // Check if the specific element exists
+    if ($("#nf_assign_rev").length > 0) {
+        console.log("Rev Finder button");
+        // HTML for the Reviewer Finder button
+        var reviewerFinderButtonHTML = '<button id="reviewerFinderBtn" class="topBtn" title="Reviewer Finder">🔎 Reviewer Finder</button>';
+        
+        // Append the Reviewer Finder button to the existing top bar
+        $("#myExtensionSearchBox").append(reviewerFinderButtonHTML);
+        // Blink the button 5 times
+        blinkButton("#reviewerFinderBtn", 3);
+        
+        // Add click event listener for the Reviewer Finder button
+        $("#reviewerFinderBtn").click(function() {
+            initiateRevFinding();
+        });
     }
 });
+
+
 // Add divs to folder table cells to manage overflow and scrolls
 document
     .querySelectorAll(
@@ -432,7 +397,7 @@ document
         }
     });
 
-    // Filter common letter types in a decision page dropdown
+// Filter common letter types in a decision page dropdown
 $(document).ready(function () {
     const selectElement = document.querySelector('select[name="template"]');
 
@@ -566,3 +531,4 @@ $(document).ready(function () {
     }
 });
 
+addTopBar();
