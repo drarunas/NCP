@@ -1,3 +1,38 @@
+// #1 Add main content into .main-div, hide .main-table with remaining scripts
+// This is the first step for all appearance modifiers
+// After this run getContext and modify pages individually base don context
+//
+$(document).ready(function() {
+    $('body').hide(); // Hide the body element
+
+    $('body > table:first').remove(); // Remove the first table child of the body
+
+    $('body > table:first').addClass('main-table'); // Add class "main-table" to the second table child of the body
+
+    $('body > table:eq(1)').remove(); // Remove the third table child of the body
+
+    // Select the second tr's second td in the tbody of the main-table
+    var content = $('.main-table tbody tr:eq(1) td:eq(1)').contents().filter(function() {
+        return this.nodeType !== 1 || this.tagName.toLowerCase() !== 'script'; // Exclude inline scripts
+    });
+
+    // Create a div with class "main-div" and add the content to it, excluding any scripts
+    var mainDiv = $('<div class="main-div"></div>').append(content);
+
+    // Append mainDiv to the body
+    $('body').prepend(mainDiv);
+
+    // Move the main-table to the end of the page and hide it
+    $('.main-table').appendTo('body').hide();
+
+    $('body').show(); // Make the body visible again
+
+    console.log(getContext());
+});
+
+
+
+
 // Add sticky management script
 const host = window.location.host;
 const scriptElement = document.createElement("script");
@@ -28,28 +63,38 @@ scriptElement.onload = function () {
 })();
 
 
+
 // REMOVING DEFAULT CSS
-if (host.includes("mts-ncomms.nature.com")) {
-    console.log("removing css");
-    // Find the <link> element with the specified href attribute
-    var linkElement = document.querySelector(
-        'link[href="https://mts-ncomms.nature.com/html/style.css"]'
-    );
+$(document).ready(function () {
+    if (host.includes("mts-ncomms.nature.com")) {
+        //console.log("removing css");
+        // Find the <link> element with the specified href attribute
+        var linkElement = document.querySelector(
+            'link[href="https://mts-ncomms.nature.com/html/style.css"]'
+        );
 
-    // Check if the element exists before removing it
-    if (linkElement) {
-        linkElement.remove();
+        // Check if the element exists before removing it
+        if (linkElement) {
+            linkElement.remove();
+        }
+
+        var linkElement = document.querySelector(
+            'link[href="https://mts-ncomms.nature.com/html/default_folder.css?1550611957"]'
+        );
+
+        // Check if the element exists before removing it
+        if (linkElement) {
+            linkElement.remove();
+        }
+
+        document.querySelectorAll('link[href="https://mts-ncomms.nature.com/html/tv.css?1550611960"]').forEach(link => {
+            link.parentNode.removeChild(link);
+        });
+
+
+
     }
-
-    var linkElement = document.querySelector(
-        'link[href="https://mts-ncomms.nature.com/html/default_folder.css?1550611957"]'
-    );
-
-    // Check if the element exists before removing it
-    if (linkElement) {
-        linkElement.remove();
-    }
-}
+});
 
 function loadRobotoFont() {
     // Create a <link> element to import the Roboto font from Google Fonts
@@ -63,176 +108,17 @@ if (host.includes("mts-ncomms.nature.com")) {
     loadRobotoFont();
 }
 
-//RESTYLING THE HOME PAGE
-$(document).ready(function () {
-    var targetRowsTitles = [
-        "Invited and Agreed",
-        "Initial QC",
-        "Editor Assignment",
-        "Manuscript Assessment Before Review",
-        "Contact Potential Referees",
-        "Under Review",
-        "Review Past Due",
-        "Draft Editor Recommendations",
-        "Review Circulated Recommendations",
-        "Manuscript Decision",
-        "Decisions Ready for Author",
-        "All Pending Manuscripts",
-        "Post Decision",
-        "Waiting for Revised Manuscript",
-        "Transferred",
-        "Queued E-mail",
-        "Export System"
-    ];
-
-    var spans = document.querySelectorAll("span.TITLE");
-    spans.forEach(function (span) {
-        if (span.textContent.includes("Author Tasks")) {
-            var table = span.closest("table");
-
-            // Folders button and div
-            var foldersButton = document.createElement("button");
-            foldersButton.textContent = "⬇️ Folders";
-            foldersButton.style.display = "block";
-            foldersButton.style.marginBottom = "10px";
-
-            var foldersContent = document.createElement("div");
-            foldersContent.style.display = "none";
-
-            var newFoldersTable = document.createElement("table");
-            newFoldersTable.className = "modern-look";
-            foldersContent.appendChild(newFoldersTable);
-
-            // Other Tasks button and div
-            var otherTasksButton = document.createElement("button");
-            otherTasksButton.textContent = "⬇️ Other Tasks";
-            otherTasksButton.style.display = "block";
-            otherTasksButton.style.marginBottom = "10px";
-
-            var otherTasksContent = document.createElement("div");
-            otherTasksContent.style.display = "none";
-
-            var newOtherTasksTable = document.createElement("table");
-
-            newOtherTasksTable.className = "other-tasks-table";
-
-            otherTasksContent.appendChild(newOtherTasksTable);
-
-            table.parentNode.insertBefore(foldersButton, table);
-            table.parentNode.insertBefore(foldersContent, table);
-            table.parentNode.insertBefore(otherTasksButton, table);
-            table.parentNode.insertBefore(otherTasksContent, table);
-
-            var rows = Array.from(table.querySelectorAll("tr"));
-            rows.forEach(function (row) {
-                var bodySpans = row.querySelectorAll("span.BODY");
-                var isTargetRow = Array.from(bodySpans).some(function (
-                    bodySpan
-                ) {
-                    return targetRowsTitles.includes(
-                        bodySpan.textContent.trim()
-                    );
-                });
-
-                if (isTargetRow) {
-                    newFoldersTable.appendChild(row.cloneNode(true)); // Add to Folders table
-                } else {
-                    newOtherTasksTable.appendChild(row.cloneNode(true)); // Add to Other Tasks table
-                }
-            });
-
-            // Remove the original table after cloning its rows
-            table.remove();
-
-            // Toggle visibility for Folders
-            var foldersState =
-                localStorage.getItem("foldersState") || "collapsed";
-            var otherTasksState =
-                localStorage.getItem("otherTasksState") || "collapsed";
-
-            foldersContent.style.display =
-                foldersState === "expanded" ? "" : "none";
-            otherTasksContent.style.display =
-                otherTasksState === "expanded" ? "" : "none";
-
-            // Toggle visibility for Folders
-            foldersButton.addEventListener("click", function () {
-                var isExpanded = foldersContent.style.display !== "none";
-                foldersContent.style.display = isExpanded ? "none" : "";
-                localStorage.setItem(
-                    "foldersState",
-                    isExpanded ? "collapsed" : "expanded"
-                );
-            });
-
-            // Toggle visibility for Other Tasks
-            otherTasksButton.addEventListener("click", function () {
-                var isExpanded = otherTasksContent.style.display !== "none";
-                otherTasksContent.style.display = isExpanded ? "none" : "";
-                localStorage.setItem(
-                    "otherTasksState",
-                    isExpanded ? "collapsed" : "expanded"
-                );
-            });
-        }
-    });
-
-    var tdElements = document.querySelectorAll(".other-tasks-table td");
-    tdElements.forEach(function (td) {
-        td.removeAttribute("nowrap");
-    });
-
-    // Find the <tr> element with the class 'ncommsbg'
-    var trElement = document.querySelector("tr.ncommsbg");
-    // Check if the <tr> element exists
-    if (trElement) {
-        // Navigate up to the parent <table> element
-        var tableElement = trElement.closest("table");
-
-        // Check if the parent <table> element exists
-        if (tableElement) {
-            // Remove the <table> element from the DOM
-            tableElement.parentNode.removeChild(tableElement);
-        }
-    }
-
-    // Find all images on the page
-    const images = document.getElementsByTagName("img");
-    // Iterate backwards through the NodeList
-    for (let i = images.length - 1; i >= 0; i--) {
-        if (
-            images[i].src ===
-            "https://mts-ncomms.nature.com/images/bred_arrow.gif"
-        ) {
-            // Create a span element for the arrow emoji
-            const arrowEmojiSpan = document.createElement("span");
-            arrowEmojiSpan.innerHTML = "✨"; // Arrow emoji
-            // Replace the image with the arrow emoji span
-            images[i].parentNode.replaceChild(arrowEmojiSpan, images[i]);
-        } else if (
-            images[i].src ===
-            "https://mts-ncomms.nature.com/images/folder_closed.gif" ||
-            images[i].src === "https://mts-ncomms.nature.com/images/folder.gif"
-        ) {
-            // Create a span element for the folder emoji
-            const folderEmojiSpan = document.createElement("span");
-            folderEmojiSpan.innerHTML = "🗂️"; // Folder emoji
-            // Replace the image with the folder emoji span
-            images[i].parentNode.replaceChild(folderEmojiSpan, images[i]);
-        }
-    }
-
-});
 
 
+
+//Replace folder tables with datatables
 
 // Add search bar on top of page
-
 function addTopBar() {
 
     // SEARCH BOX ON TOP OF PAGE
     if (host.includes("mts-ncomms.nature.com")) {
-        console.log("Adding top bar");
+        //console.log("Adding top bar");
         // SEARCH BOX ON TOP OF PAGE
 
 
@@ -240,18 +126,18 @@ function addTopBar() {
             "afterbegin",
             `
 <div id="myExtensionSearchBox">
-  <button id="homeBtn" class="topButtons" title="Home">🏠</button>
-  <button id="initialAssessmentBtn" class="topButtons" title="Initial assessment">📃</button>
-    <button id="inboxBtn" class="topButtons" title="Circulations">🕓</button>
-  <button id="decisionsBtn" class="topButtons" title="Decisions">✔️</button>
-  <button id="allBtn" class="topButtons" title="All">📁</button>
-  <input type="text" id="searchInput" placeholder="🐳 Last Name or MS#">
+  <button id="homeBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Home">🏠</button>
+  <button id="initialAssessmentBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Initial assessment">📃</button>
+  <button id="inboxBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Circulations">🕓</button>
+  <button id="decisionsBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Decisions">✔️</button>
+  <button id="allBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="All">📁</button>
+  <input type="text" id="searchInput" placeholder="🐳 Last Name or MS#" class="form-control">
   <div id="spinner" class="spinner" style="display: none;"></div>
-  <button id="searchBtn" class="topBtn">🍁Search</button>
+  <button id="searchBtn" class="topBtn btn btn-primary">🍁Search</button>
 </div>
-
 `
         );
+
 
         document
             .getElementById("searchInput")
@@ -350,52 +236,32 @@ function addTopBar() {
             window.location.href =
                 "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=155ftdNBIBwmImXZBgDmlrTX7Q&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=AdW7O3eZ&folder_id=1530;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
         });
-
-
     }
 }
 
-$(document).ready(function() {
+
+// MOVE THIS TO REVIEWER FINDING CONTEXT v2
+$(document).ready(function () {
     // Check if the specific element exists
     if ($("#nf_assign_rev").length > 0) {
         console.log("Rev Finder button");
         // HTML for the Reviewer Finder button
-        var reviewerFinderButtonHTML = '<button id="reviewerFinderBtn" class="topBtn" title="Reviewer Finder">🔎 Reviewer Finder</button>';
-        
+        var reviewerFinderButtonHTML = '<button id="reviewerFinderBtn" class="topBtn btn btn-primary" title="Reviewer Finder">🔎 Reviewer Finder</button>';
+
         // Append the Reviewer Finder button to the existing top bar
         $("#myExtensionSearchBox").append(reviewerFinderButtonHTML);
         // Blink the button 5 times
         blinkButton("#reviewerFinderBtn", 3);
-        
+
         // Add click event listener for the Reviewer Finder button
-        $("#reviewerFinderBtn").click(function() {
+        $("#reviewerFinderBtn").click(function () {
             initiateRevFinding();
         });
     }
 });
 
 
-// Add divs to folder table cells to manage overflow and scrolls
-document
-    .querySelectorAll(
-        ".folder_table td.folder_row_even, .folder_table td.folder_row_odd"
-    )
-    .forEach((td) => {
-        // Only add a wrapper if it doesn't already exist
-        if (!td.querySelector(".content-wrapper")) {
-            const wrapper = document.createElement("div");
-            wrapper.className = "content-wrapper";
-            wrapper.style.maxHeight = "100px"; // Adjust as needed
-            wrapper.style.overflow = "auto";
-            wrapper.style.width = "100%"; // Ensure it occupies the full width of the td
 
-            Array.from(td.childNodes).forEach((child) => {
-                wrapper.appendChild(child);
-            });
-
-            td.appendChild(wrapper);
-        }
-    });
 
 // Filter common letter types in a decision page dropdown
 $(document).ready(function () {
@@ -403,7 +269,7 @@ $(document).ready(function () {
 
     // Stop if the select element does not exist
     if (!selectElement) {
-        console.log('Select element with name="template" not found.');
+        //console.log('Select element with name="template" not found.');
         return;
     }
 
@@ -413,7 +279,7 @@ $(document).ready(function () {
 
     // Optionally, also stop if the specific option does not exist
     if (!optionExists) {
-        console.log("Specific option not found in the select element.");
+        //console.log("Specific option not found in the select element.");
         return;
     }
 
@@ -473,7 +339,7 @@ $(document).ready(function () {
     const selectElement = document.getElementsByName("editor_list")[0];
 
     if (selectElement) {
-        console.log("Shortening editor list");
+        //console.log("Shortening editor list");
         // The select element exists, proceed with the rest of the operations
 
         // Create a checkbox
@@ -525,9 +391,9 @@ $(document).ready(function () {
         checkbox.dispatchEvent(new Event("change"));
     } else {
         // The select element does not exist, handle accordingly
-        console.log(
-            'Select element named "editor_list" was not found on the page.'
-        );
+        // console.log(
+        //     'Select element named "editor_list" was not found on the page.'
+        // );
     }
 });
 

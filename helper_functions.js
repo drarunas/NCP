@@ -206,7 +206,7 @@ function createSpinner() {
     const spinner = document.createElement("div");
     spinner.className = "dot-spinner";
 
-    // Create and append 4 child divs to the spinner element
+
     for (let i = 0; i < 4; i++) {
         const dot = document.createElement("div");
         spinner.appendChild(dot);

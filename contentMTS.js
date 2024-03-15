@@ -1,30 +1,81 @@
+// Identify contex of the page: Home, FolderView, RevFindig, Circulation, etc.
+// Expects .main-div from appearance.js #1
+function getContext() {
+    let mainDiv = $(".main-div");
+    if (!mainDiv.length) {
+        console.error("Could not determine context: .main-div does not exist");
+        return null
+    }
 
+    if (mainDiv.find('span.TITLE').filter(function () {
+        return $(this).text().includes('Home Page for');
+    }).length > 0) {
+        document.title = "Home";
+        return "Home"
+    }
 
-function showResultsPopup(data) {
-    // Create the main popup container
-    const resultsDiv = document.createElement("div");
-    resultsDiv.className = "popupWindow";
+    if (mainDiv.find('.folder_table').length === 2) {
+        document.title = "MS Folder";
+        return "Folder"
+    }
 
-    // Create the scrollable content container
-    const contentDiv = document.createElement("div");
-    contentDiv.className = "popupContent";
-    contentDiv.innerHTML = data; // Assuming the response is HTML
-    console.log(data);
-    // Create the close button
-    const closeButton = document.createElement("button");
-    closeButton.textContent = "Close";
-    closeButton.className = "closeButton";
-    closeButton.addEventListener("click", function () {
-        resultsDiv.remove(); // This will remove the popup from the document
-    });
+    if (mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length>0){
+        document.title = "Invite Reviewers";
+        return "InviteRevs"
+    };
 
-    // Append the close button and content container to the main popup container
-    resultsDiv.appendChild(closeButton);
-    resultsDiv.appendChild(contentDiv);
+    if (mainDiv.find('> #ms_brief_table').length===1 && mainDiv.find('> .tabPage').length===1 && mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length===0) {
+            document.title = "MS View";
+            return "MSView";    
+    }
 
-    // Append the main popup container to the body
-    document.body.appendChild(resultsDiv);
+// circulate recommendation
+if (mainDiv.find('> #ms_brief_table').length===1 && mainDiv.find('> form#none > textarea[name="circulation_comment_to_other_editors"]').length===1  ) {
+    document.title = "Circulate";
+    return "Circulate"; 
+
 }
+// If no other context
+    return null
+}
+
+
+
+// search results modal (initiaded by top bar) using bootstrap5
+function showResultsPopup(data) {
+    // Check if a modal already exists, if so, remove it
+    const existingModal = document.getElementById('resultsModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    // Create the modal structure
+    const modalHTML = `
+  <div class="modal fade" id="resultsModal" tabindex="-1" aria-labelledby="resultsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="resultsModalLabel">Results</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ${data} <!-- Assuming the response is HTML safe -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+    // Append the modal HTML to the body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Use Bootstrap's modal JS to show the modal
+    const resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
+    resultsModal.show();
+}
+
 
 // assign reviewer on eJP based on ID and page params
 async function assignReviewer(reviewerId, jId, msId, msRevNo, msIdKey, currentStageId) {
@@ -128,320 +179,188 @@ function initiateRevFinding() {
 
 // Construct a reviewer list popup after clicking Rev Finder button
 function reviewerFinderPopup() {
+    // Ensure the modal is only added once
+    if ($('#reviewerFinderModal').length === 0) {
+        $('body').append(`
+  <div class="modal fade" id="reviewerFinderModal" tabindex="-1" aria-labelledby="reviewerFinderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reviewerFinderModalLabel">📖 From Reviewer Finder</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group popupList"></ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary assignSelectedBtn">Assign Selected</button>
+        </div>
+      </div>
+    </div>
+  </div>`);
+    }
 
-    // Create the popup container
-    const popup = document.createElement("div");
-    popup.className = "reviewerFinderPopup";
+    // Assign Selected button logic
+    $('#reviewerFinderModal .assignSelectedBtn').off('click').on('click', function () {
+        const $popup = $('#reviewerFinderModal'); // Assuming this is your popup container
+        const loaderOverlay = createLoaderOverlay(); // Ensure this function returns a jQuery object or element
+        $popup.append(loaderOverlay);
 
-    const form = document.getElementById("nf_assign_rev");
+        $(this).remove(); // Remove assign button
+        const $list = $popup.find('.popupList');
+        $list.css({
+            opacity: "0.5",
+            backgroundColor: "#f0f0f0" // Light gray background
+        });
+        const form = document.getElementById("nf_assign_rev");
 
-    // get page parameters
-    const getValueByName = (name) => {
-        const element = form ? form.querySelector(`[name="${name}"]`) : null;
-        return element ? element.value : null;
-    };
-
-    const formType = getValueByName("form_type");
-    const jId = getValueByName("j_id");
-    const msId = getValueByName("ms_id");
-    const msRevNo = getValueByName("ms_rev_no");
-    const msIdKey = getValueByName("ms_id_key");
-    const ndt = getValueByName("ndt");
-    const currentStageId = getValueByName("current_stage_id");
-    const desiredRevCnt = getValueByName("desired_rev_cnt");
-
-    // Create a header container for title and close button
-    const header = document.createElement("div");
-    header.className = "popupHeader"; // Use this class for flexbox styling
-
-    // Create the title
-    const title = document.createElement("h2");
-    title.textContent = "📖 From Reviewer Finder";
-    title.className = "popupTitle"; // Assign class for potential styling
-    title.style.marginRight = "auto"; // Pushes everything else to the right
-
-    // Create the scrollable list
-    const list = document.createElement("ul");
-    list.className = "popupList"; // Assign a class for easy reference
-
-    const assignButton = document.createElement("button");
-    assignButton.textContent = "Assign Selected";
-    assignButton.className = "popupCloseButton";
-    assignButton.onclick = function () {
-
-        const loaderOverlay = createLoaderOverlay();
-        popup.appendChild(loaderOverlay); // Assuming 'popup' is your popup container
-        // 1. Create and insert the spinner
-        //const spinner = createSpinner();
-        assignButton.parentNode.removeChild(assignButton);
-        list.style.opacity = "0.5";
-        list.style.backgroundColor = "#f0f0f0"; // Light gray background
-
-
-        const checkboxes = document.querySelectorAll(
-            '.popupList input[type="checkbox"]:checked'
-        );
-
+        const { formType, jId, msId, msRevNo, msIdKey, ndt, currentStageId, desiredRevCnt } = getPageParams(form);
         const operationPromises = [];
+        $('.popupList input[type="checkbox"]:checked').each(function () {
+            const $checkbox = $(this);
+            const status = $checkbox.data('status'); // Using jQuery data method to get 'data-status' value
 
-        checkboxes.forEach((checkbox) => {
-            if (checkbox.getAttribute("data-status") === "existing") {
+            if (status === "existing") {
                 // Existing reviewer assignment
-                const reviewerId = checkbox.value;
-
-                operationPromises.push(
-                    assignReviewer(
-                        reviewerId,
-                        jId,
-                        msId,
-                        msRevNo,
-                        msIdKey,
-                        currentStageId
-                    )
-                );
-            } else if (checkbox.getAttribute("data-status") === "new") {
+                const reviewerId = $checkbox.val();
+                operationPromises.push(assignReviewer(reviewerId,
+                    jId,
+                    msId,
+                    msRevNo,
+                    msIdKey,
+                    currentStageId));
+            } else if (status === "new") {
                 // New reviewer form submission
-                const firstName = checkbox.getAttribute("data-fname");
-                const lastName = checkbox.getAttribute("data-lname");
-                const email = checkbox.getAttribute("data-email");
-                const inst = checkbox.getAttribute("data-inst");
+                const firstName = $checkbox.data('fname');
+                const lastName = $checkbox.data('lname');
+                const email = $checkbox.data('email');
+                const inst = $checkbox.data('inst');
 
-                operationPromises.push(
-                    submitFormAssign(firstName, lastName, email, inst)
-                );
+                operationPromises.push(submitFormAssign(firstName, lastName, email, inst));
             }
         });
 
         Promise.all(operationPromises)
             .then(() => {
                 console.log("All reviewers have been successfully assigned.");
-                document.body.removeChild(popup); // Removes the popup from the body
-
-                // Redirect to the constructed URL
+                $popup.remove(); // Removes the popup
+                // Redirect if needed
                 window.location.href = `https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=${formType}&j_id=${jId}&ms_id=${msId}&ms_rev_no=${msRevNo}&ms_id_key=${msIdKey}&current_stage_id=${currentStageId}&show_tab=CurrentList&redirected=1&desired_rev_cnt=${desiredRevCnt}`;
             })
             .catch((error) => {
-                console.error(
-                    "An error occurred during the assignments:",
-                    error
-                );
+                console.error("An error occurred during the assignments:", error);
             }).finally(() => {
                 // Remove the loader overlay when done
-                popup.removeChild(loaderOverlay);
+                loaderOverlay.remove();
             });
-    };
 
-    // Append title and close button to the header
-    header.appendChild(title);
-    header.appendChild(assignButton);
 
-    // Append header and list to the popup
-    popup.appendChild(header);
-    popup.appendChild(list);
+    });
 
-    // Append the popup to the body
-    document.body.appendChild(popup);
+    // Show the modal using Bootstrap's modal method
+    const modalInstance = new bootstrap.Modal(document.getElementById('reviewerFinderModal'));
+    modalInstance.show();
 }
 
-// Function to add reviewer details to the popup list but not eJP revs
+
 async function addToShortList(fullName, lastName, email, inst) {
-    const list = document.querySelector(".popupList");
-    if (!list) {
+    const $list = $("#reviewerFinderModal .popupList");
+    if ($list.length === 0) {
         console.error("Popup list not found.");
         return;
     }
-    let resultsList = document.createElement("ul");
-    resultsList.classList.add("eJPResults");
-    email = email.toLowerCase();
+    // populate main result line with restuls from RF
+    const emailLowerCase = email.toLowerCase();
     const { firstName, middleInitials } = separateNameAndInitial(fullName);
-    console.log(firstName);
-    console.log(middleInitials);
-
-    // list item for a record added from RF:
-    const item = document.createElement("li");
-    item.classList.add("has-nested-ul");
-
-    
-    const firstLineDiv = document.createElement("div");
-    firstLineDiv.classList.add("firstLineDiv");
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.value = email;
-    checkbox.classList.add("shortlistcheck");
-
-    checkbox.setAttribute("data-status", "new");
-    //item.appendChild(checkbox);
-    firstLineDiv.appendChild(checkbox);
-
-    // Create a span for the text content
-    const firstLine = document.createElement("span");
-    //firstLine.textContent = `📒${firstName}, ${middleInitial},  ${lastName}, 📧${email}, ${inst}`;
     const middleInitialPart = middleInitials ? ` ${middleInitials}` : "";
-    firstLine.textContent = `📒${firstName}${middleInitialPart} ${lastName}, 📧${email}, ${inst}`;
 
-    checkbox.setAttribute("data-fname", firstName);
-    checkbox.setAttribute("data-lname", lastName);
-    checkbox.setAttribute("data-email", email);
-    checkbox.setAttribute("data-inst", inst);
+    const $item = $(`
+<li class="list-group-item has-nested-ul">
+ 
+    <input type="checkbox" class="form-check-input me-1" value="${emailLowerCase}" data-status="new" data-fname="${firstName}" data-lname="${lastName}" data-email="${emailLowerCase}" data-inst="${inst}">
+    <span>📒${firstName}${middleInitialPart} ${lastName}, 📧${emailLowerCase}, ${inst}</span>
 
-    //item.appendChild(firstLine);
-    firstLineDiv.appendChild(firstLine);
-    item.appendChild(firstLineDiv);
+  <ul class="secondLine"></ul>
+</li>`);
+    // populate the second level list
+    const $secondLine = $item.find(".secondLine");
+    const $spinner = $(createSpinner()); // Assuming createSpinner returns an HTML string for the spinner
+    $secondLine.append($spinner);
+    $list.append($item);
 
-    list.appendChild(item);
-
-    // Create a second line container for the eJP search results using the above li
-    const secondLine = document.createElement("div");
-    item.appendChild(secondLine);
-
-    // Add spinner to the second line
-    const spinner = createSpinner();
-    secondLine.appendChild(spinner);
+    // try searching for matching authors on eJP
 
     try {
         const form = document.getElementById("nf_assign_rev");
+
         const { formType, jId, msId, msRevNo, msIdKey, ndt, currentStageId, desiredRevCnt } = getPageParams(form);
-        //search eJP based on name
-        const searchData = await eJPPersonSearch(firstName, lastName, "", "", jId,
-            msId, msRevNo, msIdKey, currentStageId, desiredRevCnt);
-        const searchDataByEmail = await eJPPersonSearch("", "", email, "", jId,
-            msId, msRevNo, msIdKey, currentStageId, desiredRevCnt);
-        // Append search data result to the second line
+        const searchData = await eJPPersonSearch(firstName, lastName, "", "", jId, msId, msRevNo, msIdKey, currentStageId, desiredRevCnt) || [];
+        const searchDataByEmail = await eJPPersonSearch("", "", emailLowerCase, "", jId, msId, msRevNo, msIdKey, currentStageId, desiredRevCnt) || [];
 
         if ((!searchData || searchData.length === 0) && (!searchDataByEmail || searchDataByEmail.length === 0)) {
-            secondLine.textContent = "❌ Not on eJP";
-            checkbox.checked = true;
-        }
-        else {
-
+            $secondLine.append(`<li>❌ Not on eJP</li>`);
+            $item.find('input[type="checkbox"]').prop("checked", true);
+        } else {
             if (!searchDataByEmail || searchDataByEmail.length === 0) {
-                const emailnotfoundtext = document.createElement("li");
-                emailnotfoundtext.textContent = "❌ Email not on eJP";
-                console.log("email not on eJP");
-                resultsList.appendChild(emailnotfoundtext);
-                checkbox.checked = true;
+                $secondLine.append($(`<li>❌ Email not on eJP</li>`));
+                $item.find('input[type="checkbox"]').prop("checked", true);
+
             }
 
-            // Combine the two arrays
-            const combinedData = searchData.concat(searchDataByEmail).filter(element => element !== null);;
-            // Filter duplicates based on authId
-            console.log(combinedData);
+            const combinedData = [...searchData, ...searchDataByEmail].filter(element => element !== null);
             const uniqueCombinedData = Array.from(new Map(combinedData.map(item => [item['authId'], item])).values());
 
-            // Convert forEach loop to for...of to handle async operations
             for (const dataItem of uniqueCombinedData) {
-                const resultItem = document.createElement("li");
-                const checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.value = dataItem.authId;
-                checkbox.classList.add("shortlistcheck");
-
-                checkbox.setAttribute("data-status", "existing");
-                resultItem.appendChild(checkbox);
-
-                const nameLink = document.createElement("a");
-                nameLink.href = dataItem.nameHref;
-                nameLink.textContent = `🦉${dataItem.name}`;
-                nameLink.target = "_blank";
-
-                const detailsSpan = document.createElement("span");
-                detailsSpan.appendChild(nameLink);
-
-                // Append other details to detailsSpan
-                detailsSpan.appendChild(
-                    document.createTextNode(
-                        `, 🆔${dataItem.authId}, 🏢${dataItem.organization}`
-                    )
-                );
+                const $resultItem = $(`
+<li class="eJPResult">
+  <input type="checkbox" class="form-check-input me-1" value="${dataItem.authId}" data-status="existing">
+  <a href="${dataItem.nameHref}" target="_blank">🦉${dataItem.name}</a>, 🆔${dataItem.authId}, 🏢${dataItem.organization}
+</li>`);
 
                 // Conditionally append additional details
-                if (dataItem.pending) {
-                    detailsSpan.appendChild(
-                        document.createTextNode(
-                            `,❗ Pending: ${dataItem.pending}`
-                        )
-                    );
-                }
-                if (dataItem.averageDuration) {
-                    detailsSpan.appendChild(
-                        document.createTextNode(
-                            `, 🕓 ${dataItem.averageDuration}`
-                        )
-                    );
-                }
-                if (dataItem.conflicts) {
-                    detailsSpan.appendChild(
-                        document.createTextNode(`,❗${dataItem.conflicts}`)
-                    );
-                }
+                if (dataItem.pending) $resultItem.append(`,❗ Pending: ${dataItem.pending}`);
+                if (dataItem.averageDuration) $resultItem.append(`, 🕓 ${dataItem.averageDuration}`);
+                if (dataItem.conflicts) $resultItem.append(`,❗${dataItem.conflicts}`);
 
-                // Fetch email and append it
                 try {
-                    const fetchedEmail = await eJPGetEmail(dataItem.nameHref); // Fetch the email
+                    const fetchedEmail = await eJPGetEmail(dataItem.nameHref);
                     if (fetchedEmail) {
-                        let emailContent;
-
-                        emailContent = document.createTextNode(
-                            `, 📧 ${fetchedEmail}`
-                        );
-
-                        detailsSpan.appendChild(emailContent);
+                        $resultItem.append(`, 📧 ${fetchedEmail}`);
                     }
                 } catch (error) {
-                    console.error(
-                        "Error fetching email for:",
-                        dataItem.name,
-                        error
-                    );
-                    // Optionally handle the error, e.g., by showing a default message
+                    console.error("Error fetching email:", dataItem.name, error);
                 }
-
-                resultItem.appendChild(detailsSpan);
-                resultsList.appendChild(resultItem);
+                $secondLine.append($resultItem);
             }
-
-            secondLine.appendChild(resultsList);
         }
     } catch (error) {
-        // Remove spinner and show error message if the search fails
-        spinner.remove();
-        const errorMsg = document.createElement("div");
-        errorMsg.textContent = "Failed to load data";
-        secondLine.appendChild(errorMsg);
         console.error("Error during eJPPersonSearch:", error);
+        $secondLine.empty().text("Failed to load data");
     } finally {
-        // Before removing the spinner, reorder the <li> elements if their emails match the primary email
-        const lis = resultsList.querySelectorAll("li");
-        lis.forEach((li) => {
-            // Assuming you have a way to identify the email within the <li>, e.g., a data attribute or contained within a specific element
-            const emailSpan = li.querySelector("span"); // Adjust selector as needed to target where the email is
 
-            if (emailSpan && emailSpan.textContent.includes(`📧 ${email}`)) {
-                // If the email in the <li> matches the primary email, move this <li> to the top of the <ul>
-                li.classList.add("matchingLi");
-                resultsList.insertBefore(li, resultsList.firstChild);
-                // Select the checkbox corresponding to this <li>
-                const checkbox = li.querySelector('input[type="checkbox"]');
-                if (checkbox) {
-                    checkbox.checked = true;
-                }
+
+        // Reordering and checkbox handling
+        $(".eJPResult").each(function () {
+            const $li = $(this);
+            const emailText = `📧 ${emailLowerCase}`; // The email to match against
+            const alreadyAssignedText = "Already Assigned"; // Text indicating the reviewer is already assigned
+
+            if ($li.text().includes(emailText)) {
+                // Move this li to the top of the list
+                $li.addClass("matchingLi").prependTo($li.parent());
+                $li.find('input[type="checkbox"]').prop("checked", true);
             }
 
-            const checkbox = li.querySelector('input[type="checkbox"]');
-
-            // Check if "Already Assigned" is mentioned in the li
-            if (li.textContent.includes("Already Assigned")) {
-                if (checkbox) {
-                    checkbox.checked = false; // Uncheck
-                    checkbox.disabled = true; // Disable
-                }
+            // Check if "Already Assigned" is mentioned
+            if ($li.text().includes(alreadyAssignedText)) {
+                // Uncheck and disable the checkbox
+                $li.find('input[type="checkbox"]').prop("checked", false).prop("disabled", true);
             }
         });
-
-        spinner.remove(); // Ensure the spinner is removed after reordering
+        $spinner.remove(); // Ensure the spinner is removed after processing
     }
 }
+
 
 // Send a message to open a new RF tab
 function reviewerFinder(title, authors, abstract, MTSid) {

@@ -3,6 +3,7 @@
     "name": "NCP",
     "version": "1.0",
     "description": "NCPs",
+    
     "content_scripts": [
         {
             "matches": [
@@ -10,12 +11,27 @@
             ],
             "js": [
                 "jquery.js",
-                "contentMTS.js",
                 "appearance.js",
+                "bootstrap.bundle.min.js",
+                "dataTables.js",
+                "dataTables.responsive.js",
+                "dataTables.bootstrap5.js",
+                "responsive.bootstrap5.js",
+                "contentMTS.js",
+                "home.js",
+                "folder.js",
+                "msview.js",
+                "inviterevs.js",
+                "circulate.js",
                 "helper_functions.js"
             ],
             "css": [
-                "custom.css"
+                "custom.css",
+                "dataTables.css",
+                "responsive.bootstrap5.css",
+                "bootstrap.min.css",
+                "dataTables.bootstrap5.css"
+
             ]
         },
         {
@@ -50,6 +66,13 @@
         "declarativeNetRequest",
         "declarativeNetRequestWithHostAccess"
     ],
+      "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": false,
+      "path": "rules.json"
+    }]
+  },
     "host_permissions": [
         "https://reviewerfinder.nature.com/*",
         "https://mts-ncomms.nature.com/*"
