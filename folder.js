@@ -7,7 +7,7 @@ $(document).ready(function () {
     var folderHeader = $('<h1></h1>').text(titleText);
     var sortForm = titleTable.find('tr:eq(1)').find('form').first();
     titleTable.replaceWith($('<div class="folder-title"></div>').append(folderHeader).add($('<div class="sort-form"></div>').append(sortForm)));
-   
+
     var folderTable = $('.main-div .folder_table');
     console.log(folderTable);
     //remove attributes
@@ -81,6 +81,28 @@ $(document).ready(function () {
     // Initialize DataTables with the configured options on folderTable
     folderTable.DataTable(dataTableOptions);
     folderTable.addClass('stripe display compact row-border');
+    $('.sort-form form').addClass('d-flex flex-wrap align-items-center');
+    $('.sort-form form').children().not(':last-child').addClass('me-2');
+    $(".sort-form p").children().unwrap();
+    $('input[type="button"]').addClass('btn btn-primary');
+    $('select').addClass('form-select form-select-sm mb-3');
+    $('.sort-form').attr('id', 'collapseForm');
+    // Create the toggle button
+    var $toggleButton = $('<button/>', {
+        text: 'Backend Sort Options', // Button text
+        class: 'btn btn-primary', // Bootstrap button classes
+        type: 'button',
+        'data-bs-toggle': 'collapse',
+        'data-bs-target': '#collapseForm',
+        'aria-expanded': 'false',
+        'aria-controls': 'collapseForm'
+    });
+
+    // Insert the toggle button before the .sort-form
+    $('.sort-form').before($toggleButton);
+    $('#collapseForm').addClass('collapse');
+
+
 
 
 });

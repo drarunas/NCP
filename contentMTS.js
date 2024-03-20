@@ -33,8 +33,14 @@ function getContext() {
 if (mainDiv.find('> #ms_brief_table').length===1 && mainDiv.find('> form#none > textarea[name="circulation_comment_to_other_editors"]').length===1  ) {
     document.title = "Circulate";
     return "Circulate"; 
-
 }
+
+if ($('.main-div form#nf_assign_rev .tabPage').length>0) {
+    document.title = "Add Reviewers";
+    return "AddRevs";
+}
+
+
 // If no other context
     return null
 }

@@ -82,4 +82,7 @@ $(document).ready(function () {
     inviteTable.DataTable(dataTableOptions);
     inviteTable.addClass('stripe display compact row-border');
 
+    $('input[type="submit"]').addClass('btn btn-primary');
+    $('select').addClass('form-select form-select-sm');
+
 });

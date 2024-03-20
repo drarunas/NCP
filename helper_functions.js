@@ -240,3 +240,14 @@ function blinkButton(selector, times) {
         $(selector).removeClass("blink");
     }, times * 1000 * 2); // Duration should match the CSS animation-duration * number of blinks
 }
+
+// e.g. removeNbsp('.main-div table div);
+function removeNbsp(element) {
+    $(element).contents().each(function() {
+        if (this.nodeType === 3) { // Node type 3 is a text node
+            this.nodeValue = this.nodeValue.replace(/\u00A0/g, ''); // Replace &nbsp; with a regular space
+        } else if (this.nodeType === 1) { // Node type 1 is an element
+            removeNbsp(this); // Recursively check child elements
+        }
+    });
+}

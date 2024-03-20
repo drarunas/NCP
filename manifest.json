@@ -17,12 +17,14 @@
                 "dataTables.responsive.js",
                 "dataTables.bootstrap5.js",
                 "responsive.bootstrap5.js",
+                "bootstrap-select.min.js",
                 "contentMTS.js",
                 "home.js",
                 "folder.js",
                 "msview.js",
                 "inviterevs.js",
                 "circulate.js",
+                
                 "helper_functions.js"
             ],
             "css": [
@@ -30,7 +32,8 @@
                 "dataTables.css",
                 "responsive.bootstrap5.css",
                 "bootstrap.min.css",
-                "dataTables.bootstrap5.css"
+                "dataTables.bootstrap5.css",
+                "bootstrap-select.min.css"
 
             ]
         },

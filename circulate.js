@@ -16,15 +16,24 @@ $(document).ready(function () {
             textArea.removeAttr(this.name);
         }
     });
-    $('textarea[name="circulation_comment_to_other_editors"]').addClass('form-control').attr('rows', '15'); 
+    $('textarea[name="circulation_comment_to_other_editors"]').addClass('form-control shadow').attr('rows', '15'); 
     $('select[name="template"]').addClass('form-control');
-    $('select[name="editor_list"]').addClass('form-control');
+    $('select[name="editor_list"]').attr('data-live-search', 'true').attr('data-width', 'fit').attr("data-actions-box", "true").addClass('selectpicker');
+    $('select[name="editor_list"]').attr("data-style", "btn-info");
+
     $('input[type="submit"]').addClass('btn btn-primary');
     $('input[type="checkbox"]').addClass("form-check-input");
 
     $('.main-div br').remove();
    // $('.main-div font').remove();
     $('.main-div span.TITLE').remove();
+
+
+    $('select[name="editor_list"]').selectpicker();
+    $('select[name="editor_list"]').selectpicker('deselectAll');
+
+
+
 
 
 

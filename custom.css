@@ -465,3 +465,6 @@ ul {
     /* This will be controlled by JavaScript */
 }
 
+table.dataTable {
+    vertical-align: center !important;
+}

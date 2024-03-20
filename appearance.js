@@ -334,67 +334,67 @@ $(document).ready(function () {
 
 
 // Filter circulation editor list to human team only
-$(document).ready(function () {
-    // Attempt to find the select element by its name
-    const selectElement = document.getElementsByName("editor_list")[0];
+// $(document).ready(function () {
+//     // Attempt to find the select element by its name
+//     const selectElement = document.getElementsByName("editor_list")[0];
 
-    if (selectElement) {
-        //console.log("Shortening editor list");
-        // The select element exists, proceed with the rest of the operations
+//     if (selectElement) {
+//         //console.log("Shortening editor list");
+//         // The select element exists, proceed with the rest of the operations
 
-        // Create a checkbox
-        const checkbox = document.createElement("input");
-        checkbox.setAttribute("type", "checkbox");
-        checkbox.setAttribute("id", "filterCheckbox");
-        checkbox.checked = true;
+//         // Create a checkbox
+//         const checkbox = document.createElement("input");
+//         checkbox.setAttribute("type", "checkbox");
+//         checkbox.setAttribute("id", "filterCheckbox");
+//         checkbox.checked = true;
 
-        // Create a label for the checkbox
-        const label = document.createElement("label");
-        label.setAttribute("for", "filterCheckbox");
-        label.textContent = "Show human team only";
+//         // Create a label for the checkbox
+//         const label = document.createElement("label");
+//         label.setAttribute("for", "filterCheckbox");
+//         label.textContent = "Show human team only";
 
-        // Insert the checkbox and label before the select element
-        selectElement.parentNode.insertBefore(
-            checkbox,
-            selectElement.nextSibling
-        );
-        selectElement.parentNode.insertBefore(label, checkbox.nextSibling);
+//         // Insert the checkbox and label before the select element
+//         selectElement.parentNode.insertBefore(
+//             checkbox,
+//             selectElement.nextSibling
+//         );
+//         selectElement.parentNode.insertBefore(label, checkbox.nextSibling);
 
-        // Filter Select Options based on Checkbox
-        checkbox.addEventListener("change", function () {
-            const options = selectElement.options;
-            const filterNames = [
-                "Myrthel",
-                "Brittany Car",
-                "Yann",
-                "Arunas",
-                "Nicole"
-            ];
+//         // Filter Select Options based on Checkbox
+//         checkbox.addEventListener("change", function () {
+//             const options = selectElement.options;
+//             const filterNames = [
+//                 "Myrthel",
+//                 "Brittany Car",
+//                 "Yann",
+//                 "Arunas",
+//                 "Nicole"
+//             ];
 
-            for (let i = 0; i < options.length; i++) {
-                const option = options[i];
-                // If checkbox is checked, show only the options that match the filterNames
-                if (this.checked) {
-                    if (
-                        filterNames.some((name) => option.text.includes(name))
-                    ) {
-                        option.style.display = ""; // Show option
-                    } else {
-                        option.style.display = "none"; // Hide option
-                    }
-                } else {
-                    option.style.display = ""; // Show all options when checkbox is unchecked
-                }
-            }
-        });
-        // Trigger the change event to apply filter on page load
-        checkbox.dispatchEvent(new Event("change"));
-    } else {
-        // The select element does not exist, handle accordingly
-        // console.log(
-        //     'Select element named "editor_list" was not found on the page.'
-        // );
-    }
-});
+//             for (let i = 0; i < options.length; i++) {
+//                 const option = options[i];
+//                 // If checkbox is checked, show only the options that match the filterNames
+//                 if (this.checked) {
+//                     if (
+//                         filterNames.some((name) => option.text.includes(name))
+//                     ) {
+//                         option.style.display = ""; // Show option
+//                     } else {
+//                         option.style.display = "none"; // Hide option
+//                     }
+//                 } else {
+//                     option.style.display = ""; // Show all options when checkbox is unchecked
+//                 }
+//             }
+//         });
+//         // Trigger the change event to apply filter on page load
+//         checkbox.dispatchEvent(new Event("change"));
+//     } else {
+//         // The select element does not exist, handle accordingly
+//         // console.log(
+//         //     'Select element named "editor_list" was not found on the page.'
+//         // );
+//     }
+// });
 
 addTopBar();
