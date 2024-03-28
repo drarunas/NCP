@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    if (!getContext().includes( "MSView")) {
+    if (!getContext().includes("Notes")) {
         return
     }
 
@@ -16,18 +16,5 @@ $(document).ready(function () {
     }).catch(error => {
         console.error("Failed to get manuscript details:", error);
     });
-
-var tasksDiv =  $('<div class="tasks-div card m-2 p-2"></div>');
-tasksDiv.prepend($('<h3 class="card-title">Tasks</h3>'))
-tasksDiv.append($('.main-div  div#content_2 a'));
-var filesDiv =  $('<div class="files-div card m-2 p-2"></div>');
-filesDiv.prepend($('<h3 class="card-title">Files</h3>'))
-filesDiv.append($('.main-div  div#content_1 > ol'));
-var detailsDiv =  $('<div class="details-div card m-2 p-2"></div>');
-detailsDiv.prepend($('<h3 class="card-title">Details</h3>'))
-detailsDiv.append($('.main-div  div#content_0 > table'));
-
-
-$('.main-div').html('').append(titleDiv).append(filesDiv).append(detailsDiv);
-$('.details-div > table').replaceWith(table_to_div($('.details-div > table')));
+    
 });

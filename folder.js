@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    if (getContext() != "Folder") { return; }
+    if (!getContext().includes("Folder")) { return; }
 
 
     var titleTable = $('.main-div table:first');
     var titleText = titleTable.find('tr:first span.TITLE').text();
     var folderHeader = $('<h1></h1>').text(titleText);
     var sortForm = titleTable.find('tr:eq(1)').find('form').first();
-    titleTable.replaceWith($('<div class="folder-title"></div>').append(folderHeader).add($('<div class="sort-form"></div>').append(sortForm)));
+    titleTable.replaceWith($('<div class="folder-title card text-bg-primary p-2"></div>').append(folderHeader).add($('<div class="sort-form"></div>').append(sortForm)));
 
     var folderTable = $('.main-div .folder_table');
     console.log(folderTable);
@@ -80,6 +80,7 @@ $(document).ready(function () {
 
     // Initialize DataTables with the configured options on folderTable
     folderTable.DataTable(dataTableOptions);
+    $('.dt-container').wrap('<div class="card p-2"></div>');
     folderTable.addClass('stripe display compact row-border');
     $('.sort-form form').addClass('d-flex flex-wrap align-items-center');
     $('.sort-form form').children().not(':last-child').addClass('me-2');

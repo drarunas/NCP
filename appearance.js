@@ -2,7 +2,7 @@
 // This is the first step for all appearance modifiers
 // After this run getContext and modify pages individually base don context
 //
-$(document).ready(function() {
+$(document).ready(function () {
     $('body').hide(); // Hide the body element
 
     $('body > table:first').remove(); // Remove the first table child of the body
@@ -12,7 +12,7 @@ $(document).ready(function() {
     $('body > table:eq(1)').remove(); // Remove the third table child of the body
 
     // Select the second tr's second td in the tbody of the main-table
-    var content = $('.main-table tbody tr:eq(1) td:eq(1)').contents().filter(function() {
+    var content = $('.main-table tbody tr:eq(1) td:eq(1)').contents().filter(function () {
         return this.nodeType !== 1 || this.tagName.toLowerCase() !== 'script'; // Exclude inline scripts
     });
 
@@ -109,23 +109,15 @@ if (host.includes("mts-ncomms.nature.com")) {
 }
 
 
-
-
-//Replace folder tables with datatables
-
 // Add search bar on top of page
 function addTopBar() {
 
     // SEARCH BOX ON TOP OF PAGE
     if (host.includes("mts-ncomms.nature.com")) {
-        //console.log("Adding top bar");
-        // SEARCH BOX ON TOP OF PAGE
-
-
         document.body.insertAdjacentHTML(
             "afterbegin",
             `
-<div id="myExtensionSearchBox">
+<div id="topBar" class="top-bar">
   <button id="homeBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Home">🏠</button>
   <button id="initialAssessmentBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Initial assessment">📃</button>
   <button id="inboxBtn" class="topButtons" data-toggle="tooltip" data-placement="bottom" title="Circulations">🕓</button>
@@ -237,9 +229,15 @@ function addTopBar() {
                 "https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=folder_contents_display&j_id=18&ms_id_key=155ftdNBIBwmImXZBgDmlrTX7Q&ft_key=pRsEebnbKpjLRvyB2r8ANQ&ndt=AdW7O3eZ&folder_id=1530;role_id=30;view=pe_ind;flag_desktop=0;export_vendor=";
         });
     }
+
+
 }
 
-
+function msTasks() {
+        // Show the modal
+        var modal = new bootstrap.Modal(document.getElementById('msTasksModal'));
+        modal.show();
+}
 // MOVE THIS TO REVIEWER FINDING CONTEXT v2
 $(document).ready(function () {
     // Check if the specific element exists
@@ -249,7 +247,7 @@ $(document).ready(function () {
         var reviewerFinderButtonHTML = '<button id="reviewerFinderBtn" class="topBtn btn btn-primary" title="Reviewer Finder">🔎 Reviewer Finder</button>';
 
         // Append the Reviewer Finder button to the existing top bar
-        $("#myExtensionSearchBox").append(reviewerFinderButtonHTML);
+        $("#topBar").append(reviewerFinderButtonHTML);
         // Blink the button 5 times
         blinkButton("#reviewerFinderBtn", 3);
 
@@ -260,141 +258,5 @@ $(document).ready(function () {
     }
 });
 
-
-
-
-// Filter common letter types in a decision page dropdown
-$(document).ready(function () {
-    const selectElement = document.querySelector('select[name="template"]');
-
-    // Stop if the select element does not exist
-    if (!selectElement) {
-        //console.log('Select element with name="template" not found.');
-        return;
-    }
-
-    const optionExists = Array.from(selectElement.options).some((option) =>
-        option.text.includes("AIP - Comments")
-    );
-
-    // Optionally, also stop if the specific option does not exist
-    if (!optionExists) {
-        //console.log("Specific option not found in the select element.");
-        return;
-    }
-
-    // Check if the specific element exists on the page
-    if (selectElement && optionExists) {
-        // Create a checkbox
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.id = "commonChoicesCheckbox";
-        checkbox.checked = true; // Selected by default
-        const label = document.createElement("label");
-        label.htmlFor = "commonChoicesCheckbox";
-        label.appendChild(document.createTextNode("Common choices"));
-
-        // Insert the checkbox above the select element
-        selectElement.parentNode.insertBefore(label, selectElement);
-        selectElement.parentNode.insertBefore(checkbox, label);
-
-        // Function to filter options
-        const filterOptions = () => {
-            const commonChoices = [
-                "Reject – no review (DC)",
-                "Reject – no review (DC) - Comments",
-                "Reject – post review (DC)",
-                "Revise (3 months)",
-                "Revise (4 weeks)",
-                "AIP letter for new process with calculator"
-            ];
-
-            Array.from(selectElement.options).forEach((option) => {
-                if (checkbox.checked) {
-                    // Show only common choices
-                    if (!commonChoices.includes(option.text.trim())) {
-                        option.style.display = "none";
-                    } else {
-                        option.style.display = "block";
-                    }
-                } else {
-                    // Show all options
-                    option.style.display = "block";
-                }
-            });
-        };
-
-        // Initial filter to apply when the script loads
-        filterOptions();
-
-        // Event listener for the checkbox
-        checkbox.addEventListener("change", filterOptions);
-    }
-});
-
-
-// Filter circulation editor list to human team only
-// $(document).ready(function () {
-//     // Attempt to find the select element by its name
-//     const selectElement = document.getElementsByName("editor_list")[0];
-
-//     if (selectElement) {
-//         //console.log("Shortening editor list");
-//         // The select element exists, proceed with the rest of the operations
-
-//         // Create a checkbox
-//         const checkbox = document.createElement("input");
-//         checkbox.setAttribute("type", "checkbox");
-//         checkbox.setAttribute("id", "filterCheckbox");
-//         checkbox.checked = true;
-
-//         // Create a label for the checkbox
-//         const label = document.createElement("label");
-//         label.setAttribute("for", "filterCheckbox");
-//         label.textContent = "Show human team only";
-
-//         // Insert the checkbox and label before the select element
-//         selectElement.parentNode.insertBefore(
-//             checkbox,
-//             selectElement.nextSibling
-//         );
-//         selectElement.parentNode.insertBefore(label, checkbox.nextSibling);
-
-//         // Filter Select Options based on Checkbox
-//         checkbox.addEventListener("change", function () {
-//             const options = selectElement.options;
-//             const filterNames = [
-//                 "Myrthel",
-//                 "Brittany Car",
-//                 "Yann",
-//                 "Arunas",
-//                 "Nicole"
-//             ];
-
-//             for (let i = 0; i < options.length; i++) {
-//                 const option = options[i];
-//                 // If checkbox is checked, show only the options that match the filterNames
-//                 if (this.checked) {
-//                     if (
-//                         filterNames.some((name) => option.text.includes(name))
-//                     ) {
-//                         option.style.display = ""; // Show option
-//                     } else {
-//                         option.style.display = "none"; // Hide option
-//                     }
-//                 } else {
-//                     option.style.display = ""; // Show all options when checkbox is unchecked
-//                 }
-//             }
-//         });
-//         // Trigger the change event to apply filter on page load
-//         checkbox.dispatchEvent(new Event("change"));
-//     } else {
-//         // The select element does not exist, handle accordingly
-//         // console.log(
-//         //     'Select element named "editor_list" was not found on the page.'
-//         // );
-//     }
-// });
 
 addTopBar();

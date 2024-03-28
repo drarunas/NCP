@@ -1,6 +1,7 @@
 // Identify contex of the page: Home, FolderView, RevFindig, Circulation, etc.
 // Expects .main-div from appearance.js #1
 function getContext() {
+    var context = [];
     let mainDiv = $(".main-div");
     if (!mainDiv.length) {
         console.error("Could not determine context: .main-div does not exist");
@@ -11,38 +12,61 @@ function getContext() {
         return $(this).text().includes('Home Page for');
     }).length > 0) {
         document.title = "Home";
-        return "Home"
+        context.push("Home");
     }
 
     if (mainDiv.find('.folder_table').length === 2) {
         document.title = "MS Folder";
-        return "Folder"
+        context.push( "Folder");
     }
 
-    if (mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length>0){
+    if (mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length > 0) {
         document.title = "Invite Reviewers";
-        return "InviteRevs"
+        context.push( "InviteRevs");
     };
 
-    if (mainDiv.find('> #ms_brief_table').length===1 && mainDiv.find('> .tabPage').length===1 && mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length===0) {
-            document.title = "MS View";
-            return "MSView";    
+    if (mainDiv.find('> #ms_brief_table').length === 1 && mainDiv.find('> .tabPage').length === 1 && mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length === 0) {
+        document.title = "MS View";
+        context.push( "MSView");
     }
 
-// circulate recommendation
-if (mainDiv.find('> #ms_brief_table').length===1 && mainDiv.find('> form#none > textarea[name="circulation_comment_to_other_editors"]').length===1  ) {
-    document.title = "Circulate";
-    return "Circulate"; 
-}
+    if (mainDiv.find('> #ms_brief_table').length === 1 && mainDiv.find('> form#none > textarea[name="circulation_comment_to_other_editors"]').length === 1) {
+        document.title = "Circulate";
+        context.push( "Circulate");
+    }
 
-if ($('.main-div form#nf_assign_rev .tabPage').length>0) {
-    document.title = "Add Reviewers";
-    return "AddRevs";
-}
+    if ($('.main-div form#nf_assign_rev .tabPage').length > 0) {
+        document.title = "Add Reviewers";
+        context.push( "AddRevs");
+    }
 
+    if ($('.main-div > form > b:contains("Circulation Comments")').length > 0) {
+        document.title = "Circulation Comments";
+        context.push( "CirculationComms");
+    }
 
-// If no other context
-    return null
+    if ($('.main-div > form#edit_email').length > 0) {
+        document.title = "Edit Email";
+        context.push( "EditEmail");
+    }
+
+    if ($('.main-div > form#review_form_loader').length > 0) {
+        document.title = "Ed Decision";
+        context.push("EdDecision");
+    }
+
+    if ($('div.content > .toolbar > a[title="Manuscript Tasks"]').length > 0) {
+        context.push("MSTasks");
+    }
+
+    if  (window.location.href.includes('form_type=view_staff_notes')){
+        
+        document.title = "Notes";
+        context.push("Notes");
+    }
+
+    // If no other context
+    return context
 }
 
 

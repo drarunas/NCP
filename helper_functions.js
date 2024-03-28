@@ -251,3 +251,147 @@ function removeNbsp(element) {
         }
     });
 }
+
+
+async function getMSDetails() {
+    const scripts = $('p > script');
+    let paramsString = null;
+    const regex = /details_ajax_js[^{]*{[^}]*var params\s*=\s*'([^']*)'\s*\+\s*time;/s;
+
+    for (let script of scripts) {
+      const scriptContent = script.textContent || script.innerText;
+      const match = regex.exec(scriptContent);
+      if (match && match[1]) {
+        // Found the params variable assignment
+        paramsString = match[1];
+        break;
+      }
+    }
+  
+    if (!paramsString) {
+      console.log("Could not find 'params' within details_ajax_js function.");
+      return {}; // Return an empty object if paramsString wasn't found
+    }
+
+    // Since $.ajax is used, wrap the AJAX call in a new Promise
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: "cgi-bin/main.plex",
+        type: "POST",
+        data: paramsString,
+        success: function(response) {
+            const titleValuePairs = {};
+            var tempDiv = $('<div></div>');
+            tempDiv.html(response);
+        
+            // Now, find the table within the tempDiv
+            var table = tempDiv.find('table:first');
+  
+            $(table).find('tr').each(function() {
+              const title = $(this).find('th:first').text().trim();
+              const value = $(this).find('td:first').text().trim();
+              if (title && value) {
+                titleValuePairs[title] = value;
+              }
+            });
+
+            resolve(titleValuePairs); // Resolve the promise with the titleValuePairs object
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX Error:", status, error);
+          reject(error); // Reject the promise on error
+        }
+      });
+    });
+}
+
+
+async function getMSTasks() {
+    const scripts = $('p > script');
+    let paramsString = null;
+    const regex = /tasks_ajax_js[^{]*{[^}]*var params\s*=\s*'([^']*)'\s*\+\s*time;/s;
+
+    for (let script of scripts) {
+      const scriptContent = script.textContent || script.innerText;
+      const match = regex.exec(scriptContent);
+      if (match && match[1]) {
+        // Found the params variable assignment
+        paramsString = match[1];
+        break;
+      }
+    }
+  
+    if (!paramsString) {
+      console.log("Could not find 'params' within tasks_ajax_js function.");
+      return {}; // Return an empty object if paramsString wasn't found
+    }
+
+    // Since $.ajax is used, wrap the AJAX call in a new Promise
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: "cgi-bin/main.plex",
+        type: "POST",
+        data: paramsString,
+        success: function(response) {
+            var tempDiv = $('<div></div>');
+            tempDiv.html(response);
+            
+            // Create an ordered list
+            var resOl = $('<ul></ul>');
+            
+            // Find all 'a' elements and append them to the ordered list, each wrapped in an 'li'
+            tempDiv.find('a').each(function() {
+                var listItem = $('<li></li>').append($(this));
+                resOl.append(listItem);
+            });
+        
+            // Resolve with the ordered list
+            resolve(resOl);
+        },
+        error: function(xhr, status, error) {
+          console.error("AJAX Error:", status, error);
+          reject(error); // Reject the promise on error
+        }
+      });
+    });
+}
+
+
+function table_to_div(table) {
+    // Find the table element
+  // Find the table element
+  const $table = $(table);
+
+  // Create a new div to hold the converted content
+  const $divContainer = $('<div class="container"></div>');
+
+  // Iterate over each row in the table
+  $table.find('tr').each(function() {
+    const $row = $(this);
+    const $header = $row.find('th').html(); // Get the header content
+    const $value = $row.find('td').html(); // Get the value content
+
+    // Create and append a div for the header
+    if ($header) { // Check if header exists to handle rows with no <th>
+      const $headerDiv = $('<h6 mb-1"></h6>').html($header);
+      $divContainer.append($headerDiv);
+    }
+    
+    // Create and append a div for the value
+    if ($value) { // Check if value exists to handle rows with no <td>
+      const $valueDiv = $('<div class="mb-3"></div>').html($value);
+      $divContainer.append($valueDiv);
+    }
+          // Append a stylized horizontal line using Bootstrap's border and margin utilities
+          const $hr = $('<div class="border-top my-3"></div>');
+          $divContainer.append($hr);
+  });
+
+    
+    // Replace the table with the new div container
+    return $divContainer;
+ 
+  }
+  
+
+  

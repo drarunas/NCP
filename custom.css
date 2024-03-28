@@ -11,7 +11,14 @@
     margin-left: 15%;
     margin-right: 15%;
     gap: 5px;
+    width: 70%;
+  
 }
+.main-div form,
+.email-div {
+    width: 100%;
+}
+
 
 .folder-div {
     display: grid;
@@ -19,12 +26,12 @@
     gap: 10px; /* Optional: adds some space between the grid items */
   }
 
-  .msview-title {
+  /* .msview-title {
     display: grid;
     place-items: center;
-    grid-template-columns: 1fr; /* This creates two columns of equal width */
-    gap: 1px; /* Optional: adds some space between the grid items */
-  }
+    grid-template-columns: 1fr ; 
+    gap: 1px;
+  } */
   
 
 body {
@@ -33,12 +40,13 @@ body {
     /* Shortcut for align-items and justify-items */
     min-height: 10vh;
     /* Ensures the body takes at least the full height of the viewport */
-    margin: 15% !important;
+    margin: 5% !important;
     /* Removes the default margin */
-    background-color: #e8e8e8;
+    background-color: #cacaca;
     margin-top: 70px !important;
     grid-template-columns: 1fr !important;
     row-gap: 5px;
+    
 }
 
 BODY {
@@ -88,7 +96,7 @@ BODY {
     cursor: pointer;
 }
 
-#myExtensionSearchBox {
+.top-bar {
     position: fixed;
     top: 0;
     left: 50%;
@@ -103,7 +111,6 @@ BODY {
     max-height: 50px;
     box-sizing: border-box;
     align-items: center;
-    /* Align children vertically in the center */
 
 }
 
@@ -151,7 +158,7 @@ BODY {
     /* Adjust display as needed, depending on layout */
 }
 
-#myExtensionSearchBox .spinner {
+.top-bar .spinner {
     vertical-align: middle;
     flex: 0 0 auto;
     /* Prevents the spinner from growing or shrinking */

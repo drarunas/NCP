@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    if (getContext() != "Home") { return; }
+    if (!getContext().includes( "Home")) { return; }
     let tasksTable = $(".main-div").find('table').first();
 
     // Create individual wrapper divs for each collapsible section

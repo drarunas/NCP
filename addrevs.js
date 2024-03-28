@@ -1,13 +1,30 @@
 $(document).ready(function () {
-    if (getContext() != "AddRevs") { return; }
+    if (!getContext().includes( "AddRevs") ) { return; }
     console.log('addrevs');
+
     var titleTable = $('.main-div > form > table#ms_brief_table');
     var titleDiv = $('<div class="msview-title"></div>');
-    titleDiv.append($('<h6></h6>').html(titleTable.find('tr:first > th').html()));
-    titleDiv.append($('<h6></h6>').html(titleTable.find('tr:first > td:first').html()));
-    titleDiv.append($('<h6></h6>').html(titleTable.find('tr:first > td:eq(1)').html()));
-    titleDiv.append($('<h3></h3>').html(titleTable.find('tr:first > td:eq(2)').html()));
     titleTable.replaceWith(titleDiv);
+    titleDiv.append($('<h6 class="badge m-1 text-bg-info"></h6>').html(titleTable.find('tr:first > th').html()));
+    titleDiv.append($('<h6 class="badge m-1 text-bg-info"></h6>').html(titleTable.find('tr:first > td:first').html()));
+    titleDiv.append($('<h6 class="badge m-1 text-bg-secondary"></h6>').html(titleTable.find('tr:first > td:eq(1)').html()));
+
+    getMSDetails().then(msDetails => {
+        //titleDiv.append($('<h6></h6>').html(msDetails["Corresponding Author"]));
+        titleDiv.append($('<h6 class="badge m-1 text-bg-secondary"></h6>').html(msDetails["Submission Date"]));
+        titleDiv.append($('<h3></h3>').html(msDetails["Title"]));
+        
+
+    }).catch(error => {
+        console.error("Failed to get manuscript details:", error);
+    });
+    
+
+    
+
+
+
+
 
     
     $('input[type="submit"]').addClass('btn btn-primary mb-3');
@@ -33,7 +50,7 @@ $(document).ready(function () {
     });
     $('.main-div > form > .tab-div > div > br').replaceWith('');
   
-    // Reviewer Search Tab Page
+    // Reviewer Search Tab 
     var contentDivSearch = $(".main-div > form > .tab-div > div#content_0");
 
     var searchDiv = $('<div class="rev-search-div card m-2 p-2"></div>').appendTo('body');
@@ -96,9 +113,6 @@ $(document).ready(function () {
 
     searchDiv.append($btnGroup);
 
-
-
-
     // Reviewer Search Tab Page
     var contentDivAdd = $(".main-div > form > .tab-div > div#content_2");
     var $addDiv = $('<div class="rev-add-div card m-2 p-2"></div>');
@@ -130,7 +144,7 @@ $(document).ready(function () {
     
     removeNbsp('.main-div div');
 
-    var addResultsTable = $('.main-div > form > .tab-div > div > table#artv_search_results_tbl');
+    var addResultsTable = $('.main-div > form > .tab-div > div.rev-add-div > table#artv_search_results_tbl');
     $($addDiv).append(addResultsTable);
     contentDivAdd.replaceWith($addDiv);
 
@@ -190,6 +204,18 @@ $(document).ready(function () {
     //revsTable.DataTable(dataTableOptions);
     $clonedTable.addClass('stripe display compact row-border');
     $clonedTable.find('textarea').addClass("form-control");
+    revsTableDiv.addClass('revs-existing-div');
 
+
+   // $('.main-div div#content_5').replaceWith('');
+   // $('.main-div div#content_6').replaceWith('');
+
+
+
+    var revsExistingDiv = $('.tab-div').find('.revs-existing-div');
+
+    // Move the selected div to be the first child of .tab-div
+    $('.tab-div').prepend(revsExistingDiv);
+   
 
 });

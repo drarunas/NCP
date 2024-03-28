@@ -1,12 +1,19 @@
 $(document).ready(function () {
-    if (getContext() != "Circulate") { return; }
+    if (!getContext().includes( "Circulate")) { return; }
     var titleTable = $('.main-div > table#ms_brief_table');
     var titleDiv = $('<div class="msview-title"></div>');
-    titleDiv.append($('<h6></h6>').html(titleTable.find('tr:first > th').html()));
-    titleDiv.append($('<h6></h6>').html(titleTable.find('tr:first > td:first').html()));
-    titleDiv.append($('<h6></h6>').html(titleTable.find('tr:first > td:eq(1)').html()));
-    titleDiv.append($('<h3></h3>').html(titleTable.find('tr:first > td:eq(2)').html()));
     titleTable.replaceWith(titleDiv);
+    titleDiv.append($('<h6 class="badge m-1 text-bg-info"></h6>').html(titleTable.find('tr:first > th').html()));
+    titleDiv.append($('<h6 class="badge m-1 text-bg-info"></h6>').html(titleTable.find('tr:first > td:first').html()));
+    titleDiv.append($('<h6 class="badge m-1 text-bg-secondary"></h6>').html(titleTable.find('tr:first > td:eq(1)').html()));
+
+    getMSDetails().then(msDetails => {
+        //titleDiv.append($('<h6></h6>').html(msDetails["Corresponding Author"]));
+        titleDiv.append($('<h3></h3>').html(msDetails["Title"]));
+
+    }).catch(error => {
+        console.error("Failed to get manuscript details:", error);
+    });
 
     var textArea = $('.main-div > form#none > textarea[name="circulation_comment_to_other_editors"]');
     console.log(textArea);
@@ -25,12 +32,15 @@ $(document).ready(function () {
     $('input[type="checkbox"]').addClass("form-check-input");
 
     $('.main-div br').remove();
-   // $('.main-div font').remove();
     $('.main-div span.TITLE').remove();
 
 
     $('select[name="editor_list"]').selectpicker();
     $('select[name="editor_list"]').selectpicker('deselectAll');
+
+    //$('.main-div > table').replaceWith(table_to_div($('.main-div > table')));
+    $('.main-div > table').replaceWith();
+
 
 
 

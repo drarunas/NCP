@@ -11,6 +11,7 @@
             ],
             "js": [
                 "jquery.js",
+                "helper_functions.js",
                 "appearance.js",
                 "bootstrap.bundle.min.js",
                 "dataTables.js",
@@ -24,8 +25,12 @@
                 "msview.js",
                 "inviterevs.js",
                 "circulate.js",
-                
-                "helper_functions.js"
+                "addrevs.js",
+                "circulationcomms.js",
+                "editemail.js",
+                "eddecision.js",
+                "mstasks.js",
+                "notes.js"
             ],
             "css": [
                 "custom.css",
