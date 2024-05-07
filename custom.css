@@ -1,64 +1,28 @@
-.dt_icon_column {
-    width: 0px;
-    min-width: 0px;
-    text-align: right;
+/* BODY * {
+    font-size: 16px !important;
+    font-weight: normal !important;
+    font-family: "Roboto", sans-serif !important;
 }
 
-.main-div {
-    display: grid;
-    grid-template-columns: 1fr;
-    place-items: center;
-    margin-left: 15%;
-    margin-right: 15%;
-    gap: 5px;
-    width: 70%;
-  
-}
-.main-div form,
-.email-div {
-    width: 100%;
+.folder_table   {
+    min-width: 100% !important;
 }
 
-
-.folder-div {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* This creates two columns of equal width */
-    gap: 10px; /* Optional: adds some space between the grid items */
-  }
-
-  /* .msview-title {
-    display: grid;
-    place-items: center;
-    grid-template-columns: 1fr ; 
-    gap: 1px;
-  } */
-  
-
-body {
-    display: grid !important; 
-    place-items: center !important;
-    /* Shortcut for align-items and justify-items */
-    min-height: 10vh;
-    /* Ensures the body takes at least the full height of the viewport */
-    margin: 5% !important;
-    /* Removes the default margin */
-    background-color: #cacaca;
-    margin-top: 70px !important;
-    grid-template-columns: 1fr !important;
-    row-gap: 5px;
-    
+body > table:nth-of-type(2) 
+ {
+    width: 80% !important;
 }
+ */
 
-BODY {
-    font-size: 16px;
-    color: #223240;
-    font-family: "Roboto", sans-serif;
+
+
+.pcheck {
+    width: 15px !important;
+    height: 15px !important; 
 }
 
 
 
-
-/* Popup Window */
 .popupWindow {
     position: fixed;
     top: 50%;
@@ -100,8 +64,8 @@ BODY {
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translateX(-50%);
-    z-index:    10000;
+    transform:8 translateX(-50%);
+    z-index:  5  10000;
     background: rgb(255, 255, 255);
     padding: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -185,17 +149,7 @@ BODY {
     margin-right: 2px;
 }
 
-.stickynote,
-.stickytitle {
-    border: 0px solid antiquewhite !important;
-    width: 600px;
-    max-width: 90%;
-    border-radius: 5px;
-}
 
-.stickynote {
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
-}
 
 .firstLineDiv {
     display: flex;
@@ -226,21 +180,6 @@ BODY {
     /* Changes cursor to pointer on hover */
 }
 
-
-.other-tasks-table {
-    border-collapse: collapse;
-    display: block;
-    width: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: auto;
-}
-
-.other-tasks-table td {
-    word-break: break-all !important;
-    /* This will break the URL at any character to ensure it fits within its container */
-}
-
 ul {
     list-style-type: none;
     /* Examples: disc, circle, square, none */
@@ -256,7 +195,7 @@ ul {
 }
 
 .eJPResults li {
-    padding: 10px;
+    padding: 5px;
     /* Adds padding inside each list item */
     margin-bottom: 10px;
     /* Adds space between list items */
@@ -382,7 +321,7 @@ ul {
     height: 0px;
     border-radius: 100%;
     opacity: 0;
-    border: 5px solid rgb(216, 101, 195);
+    border: 5px solid rgb(255, 241, 252);
     animation: anim 4s infinite linear;
 }
 
@@ -458,8 +397,6 @@ ul {
         box-shadow: 0 0 8px 3px rgb(217, 148, 160);
 
     }
-
-
 }
 
 .blink {
@@ -470,8 +407,4 @@ ul {
     /* Ensure that the animation count is set in JavaScript */
     animation-iteration-count: 10;
     /* This will be controlled by JavaScript */
-}
-
-table.dataTable {
-    vertical-align: center !important;
 }

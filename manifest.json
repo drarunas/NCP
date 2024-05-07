@@ -1,45 +1,27 @@
 {
     "manifest_version": 3,
-    "name": "NCP",
-    "version": "1.0",
-    "description": "NCPs",
+    "name": "ejprf",
+    "version": "0.1",
+    "description": "A bridge between Reviewer Finder and eJP for editors across Nature Portfolio. Find an assign reviewers on eJP using SN Reviewer Finder.",
     
     "content_scripts": [
         {
             "matches": [
-                "https://mts-ncomms.nature.com/*"
+                "https://mts-ncomms.nature.com/*",
+                "https://mts-nathumbehav.nature.com/*",
+                "https://mts-commspsychol.nature.com/*",
+                "https://mts-nature.nature.com/*"
+
             ],
             "js": [
                 "jquery.js",
                 "helper_functions.js",
-                "appearance.js",
-                "bootstrap.bundle.min.js",
-                "dataTables.js",
-                "dataTables.responsive.js",
-                "dataTables.bootstrap5.js",
-                "responsive.bootstrap5.js",
-                "bootstrap-select.min.js",
-                "contentMTS.js",
-                "home.js",
-                "folder.js",
-                "msview.js",
-                "inviterevs.js",
-                "circulate.js",
-                "addrevs.js",
-                "circulationcomms.js",
-                "editemail.js",
-                "eddecision.js",
-                "mstasks.js",
-                "notes.js"
+                "bootstrap.min.js",
+                "contentMTS.js"
             ],
             "css": [
                 "custom.css",
-                "dataTables.css",
-                "responsive.bootstrap5.css",
-                "bootstrap.min.css",
-                "dataTables.bootstrap5.css",
-                "bootstrap-select.min.css"
-
+                "bs.css"
             ]
         },
         {
@@ -74,16 +56,11 @@
         "declarativeNetRequest",
         "declarativeNetRequestWithHostAccess"
     ],
-      "declarative_net_request": {
-    "rule_resources": [{
-      "id": "ruleset_1",
-      "enabled": false,
-      "path": "rules.json"
-    }]
-  },
     "host_permissions": [
         "https://reviewerfinder.nature.com/*",
-        "https://mts-ncomms.nature.com/*"
+        "https://mts-ncomms.nature.com/*",
+        "https://www.googletagmanager.com/*",
+        "https://www.google-analytics.com/*"
     ],
     "background": {
         "service_worker": "background.js"

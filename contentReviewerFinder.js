@@ -116,9 +116,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 // Optionally, you can fully disable the button or adjust its appearance further
                 assignButton.disabled = true;
             };
-
-            // You can add your code that uses assignButton here
-            // For example, adding an event listener or manipulating the button
         }, delay);
 
 

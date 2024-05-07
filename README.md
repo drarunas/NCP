@@ -1,2 +1,0 @@
-### 📓 NC eJP integrations. ###
-

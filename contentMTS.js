@@ -1,77 +1,5 @@
-// Identify contex of the page: Home, FolderView, RevFindig, Circulation, etc.
-// Expects .main-div from appearance.js #1
-function getContext() {
-    var context = [];
-    let mainDiv = $(".main-div");
-    if (!mainDiv.length) {
-        console.error("Could not determine context: .main-div does not exist");
-        return null
-    }
-
-    if (mainDiv.find('span.TITLE').filter(function () {
-        return $(this).text().includes('Home Page for');
-    }).length > 0) {
-        document.title = "Home";
-        context.push("Home");
-    }
-
-    if (mainDiv.find('.folder_table').length === 2) {
-        document.title = "MS Folder";
-        context.push( "Folder");
-    }
-
-    if (mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length > 0) {
-        document.title = "Invite Reviewers";
-        context.push( "InviteRevs");
-    };
-
-    if (mainDiv.find('> #ms_brief_table').length === 1 && mainDiv.find('> .tabPage').length === 1 && mainDiv.find('table > tbody > tr > td > table > tbody > tr > td > div > form#topf').length === 0) {
-        document.title = "MS View";
-        context.push( "MSView");
-    }
-
-    if (mainDiv.find('> #ms_brief_table').length === 1 && mainDiv.find('> form#none > textarea[name="circulation_comment_to_other_editors"]').length === 1) {
-        document.title = "Circulate";
-        context.push( "Circulate");
-    }
-
-    if ($('.main-div form#nf_assign_rev .tabPage').length > 0) {
-        document.title = "Add Reviewers";
-        context.push( "AddRevs");
-    }
-
-    if ($('.main-div > form > b:contains("Circulation Comments")').length > 0) {
-        document.title = "Circulation Comments";
-        context.push( "CirculationComms");
-    }
-
-    if ($('.main-div > form#edit_email').length > 0) {
-        document.title = "Edit Email";
-        context.push( "EditEmail");
-    }
-
-    if ($('.main-div > form#review_form_loader').length > 0) {
-        document.title = "Ed Decision";
-        context.push("EdDecision");
-    }
-
-    if ($('div.content > .toolbar > a[title="Manuscript Tasks"]').length > 0) {
-        context.push("MSTasks");
-    }
-
-    if  (window.location.href.includes('form_type=view_staff_notes')){
-        
-        document.title = "Notes";
-        context.push("Notes");
-    }
-
-    // If no other context
-    return context
-}
-
-
-
 // search results modal (initiaded by top bar) using bootstrap5
+
 function showResultsPopup(data) {
     // Check if a modal already exists, if so, remove it
     const existingModal = document.getElementById('resultsModal');
@@ -134,9 +62,11 @@ async function assignReviewer(reviewerId, jId, msId, msRevNo, msIdKey, currentSt
 
 // when RF button clicked -> reviewerFinderPopup reviewerFinder
 function initiateRevFinding() {
+
+
     const randomNumber = Math.floor(Math.random() * 1000);
     const formattedNumber = randomNumber.toString().padStart(3, '0');
-    document.title = `↙️ ${formattedNumber} Importing Reviewers`;
+    //document.title = `↙️ ${formattedNumber} Importing Reviewers`;
     const msDetailsRow = document.querySelector(
         "#ms_details_row_author_information"
     );
@@ -216,14 +146,14 @@ function reviewerFinderPopup() {
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="reviewerFinderModalLabel">📖 From Reviewer Finder</h5>
+          <h4 class="modal-title" id="reviewerFinderModalLabel">📖 Reviewer Finder Shortlist</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <ul class="list-group popupList"></ul>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary assignSelectedBtn">Assign Selected</button>
+          <button type="button" class="assignSelectedBtn">Assign Selected</button>
         </div>
       </div>
     </div>
@@ -275,7 +205,8 @@ function reviewerFinderPopup() {
                 console.log("All reviewers have been successfully assigned.");
                 $popup.remove(); // Removes the popup
                 // Redirect if needed
-                window.location.href = `https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=${formType}&j_id=${jId}&ms_id=${msId}&ms_rev_no=${msRevNo}&ms_id_key=${msIdKey}&current_stage_id=${currentStageId}&show_tab=CurrentList&redirected=1&desired_rev_cnt=${desiredRevCnt}`;
+                const hosthref = $('#nf_assign_rev').attr('action');
+                window.location.href = `${hosthref}?form_type=${formType}&j_id=${jId}&ms_id=${msId}&ms_rev_no=${msRevNo}&ms_id_key=${msIdKey}&current_stage_id=${currentStageId}&show_tab=CurrentList&redirected=1&desired_rev_cnt=${desiredRevCnt}`;
             })
             .catch((error) => {
                 console.error("An error occurred during the assignments:", error);
@@ -305,9 +236,9 @@ async function addToShortList(fullName, lastName, email, inst) {
     const middleInitialPart = middleInitials ? ` ${middleInitials}` : "";
 
     const $item = $(`
-<li class="list-group-item has-nested-ul">
+<li class="list-group-item has-nested-ul ">
  
-    <input type="checkbox" class="form-check-input me-1" value="${emailLowerCase}" data-status="new" data-fname="${firstName}" data-lname="${lastName}" data-email="${emailLowerCase}" data-inst="${inst}">
+    <input type="checkbox" class="form-check-input pcheck" value="${emailLowerCase}" data-status="new" data-fname="${firstName}" data-lname="${lastName}" data-email="${emailLowerCase}" data-inst="${inst}">
     <span>📒${firstName}${middleInitialPart} ${lastName}, 📧${emailLowerCase}, ${inst}</span>
 
   <ul class="secondLine"></ul>
@@ -342,9 +273,9 @@ async function addToShortList(fullName, lastName, email, inst) {
 
             for (const dataItem of uniqueCombinedData) {
                 const $resultItem = $(`
-<li class="eJPResult">
-  <input type="checkbox" class="form-check-input me-1" value="${dataItem.authId}" data-status="existing">
-  <a href="${dataItem.nameHref}" target="_blank">🦉${dataItem.name}</a>, 🆔${dataItem.authId}, 🏢${dataItem.organization}
+<li class="eJPResult ">
+  <input type="checkbox" class="form-check-input pcheck" value="${dataItem.authId}" data-status="existing">
+  <a href="${dataItem.nameHref}" target="_blank">🦉${dataItem.name}</a>, 🏢${dataItem.organization}
 </li>`);
 
                 // Conditionally append additional details
@@ -355,7 +286,7 @@ async function addToShortList(fullName, lastName, email, inst) {
                 try {
                     const fetchedEmail = await eJPGetEmail(dataItem.nameHref);
                     if (fetchedEmail) {
-                        $resultItem.append(`, 📧 ${fetchedEmail}`);
+                        $resultItem.append(`, 📧${fetchedEmail}`);
                     }
                 } catch (error) {
                     console.error("Error fetching email:", dataItem.name, error);
@@ -372,7 +303,7 @@ async function addToShortList(fullName, lastName, email, inst) {
         // Reordering and checkbox handling
         $(".eJPResult").each(function () {
             const $li = $(this);
-            const emailText = `📧 ${emailLowerCase}`; // The email to match against
+            const emailText = `📧${emailLowerCase}`; // The email to match against
             const alreadyAssignedText = "Already Assigned"; // Text indicating the reviewer is already assigned
 
             if ($li.text().includes(emailText)) {
@@ -482,3 +413,81 @@ async function submitFormAssign(firstName, lastName, email, inst) {
         console.error("Error in fetch operation:", error);
     }
 }
+
+
+$(document).ready(function () {
+    // Check if the specific element exists
+    if ($("#nf_assign_rev").length > 0) {
+        console.log("Rev Finder button");
+        // HTML for the Reviewer Finder button
+        var reviewerFinderButtonHTML = '<button id="reviewerFinderBtn" class="mb-2" title="Reviewer Finder">🔎 Reviewer Finder</button>';
+
+        // Append the Reviewer Finder button to the existing top bar
+        $("#nf_assign_rev").prepend(reviewerFinderButtonHTML);
+        // Blink the button 5 times
+        blinkButton("#reviewerFinderBtn", 5);
+
+        // Add click event listener for the Reviewer Finder button
+        $("#reviewerFinderBtn").click(function () {
+            sendEvent('rfinitiated', '1').catch(console.error);
+            initiateRevFinding();
+        });
+    }
+});
+
+function loadRobotoFont() {
+    // Create a <link> element to import the Roboto font from Google Fonts
+    var linkElement = document.createElement("link");
+    linkElement.href =
+        "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap";
+    linkElement.rel = "stylesheet";
+    document.head.appendChild(linkElement);
+}
+
+//loadRobotoFont();
+
+
+
+
+const GA_ENDPOINT = 'https://www.google-analytics.com/mp/collect';
+const MEASUREMENT_ID = `G-3ZRV844YEE`;
+const API_SECRET = `fXY6muchQf6nomHF4aTutA`;
+
+const SESSION_EXPIRATION_IN_MIN = 30;
+
+
+
+
+const DEFAULT_ENGAGEMENT_TIME_IN_MSEC = 100;
+
+async function sendEvent(eventname, eventid) {
+    chrome.runtime.sendMessage({ action: "getOrCreateClientId" }, response => {
+        const clientId = response.clientId;
+        chrome.runtime.sendMessage({ action: "getOrCreateSessionId" }, response => {
+            const sessionId = response.sessionId;
+            
+
+            fetch(`${GA_ENDPOINT}?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    client_id: clientId,
+                    events: [{
+                        name: eventname,
+                        params: {
+                            session_id: sessionId,
+                            engagement_time_msec: DEFAULT_ENGAGEMENT_TIME_IN_MSEC,
+                            id: eventid,
+                            hostname: window.location.href
+                        },
+                    }],
+                }),
+            }).then(data => {
+                console.log('Event sent successfully', eventname, data);
+            }).catch(console.error);
+        });
+    });
+}
+
+sendEvent('page_ext_loaded', '0').catch(console.error);
+
+

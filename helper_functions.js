@@ -84,7 +84,8 @@ async function eJPPersonSearch(
 
     try {
         const response = await fetch(
-            "https://mts-ncomms.nature.com/cgi-bin/main.plex",
+ //           "https://mts-ncomms.nature.com/cgi-bin/main.plex",
+                $('#nf_assign_rev').attr('action'),
             {
                 method: "POST",
                 headers: {
@@ -94,7 +95,7 @@ async function eJPPersonSearch(
                     "content-type": "application/x-www-form-urlencoded"
                 },
                 body: requestBody,
-                referrer: "https://mts-ncomms.nature.com/cgi-bin/main.plex",
+                referrer: $('#nf_assign_rev').attr('action'),
                 referrerPolicy: "strict-origin-when-cross-origin",
                 mode: "cors",
                 credentials: "include"
@@ -176,7 +177,8 @@ function separateNameAndInitial(fullName) {
 
 async function fetchNatureData(requestBody) {
     const response = await fetch(
-        "https://mts-ncomms.nature.com/cgi-bin/main.plex",
+        //"https://mts-ncomms.nature.com/cgi-bin/main.plex",
+        $('#nf_assign_rev').attr('action'),
         {
             method: "POST",
             headers: {
@@ -185,7 +187,7 @@ async function fetchNatureData(requestBody) {
                 "cache-control": "max-age=0",
                 "content-type": "application/x-www-form-urlencoded"
             },
-            referrer: "https://mts-ncomms.nature.com/cgi-bin/main.plex",
+            referrer: $('#nf_assign_rev').attr('action'),
             referrerPolicy: "strict-origin-when-cross-origin",
             body: requestBody,
             mode: "cors",
