@@ -489,5 +489,3 @@ async function sendEvent(eventname, eventid) {
 }
 
 sendEvent('page_ext_loaded', '0').catch(console.error);
-
-
