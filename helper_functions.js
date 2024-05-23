@@ -30,6 +30,8 @@ function getPageParams(form) {
 }
 
 // get reviewer email from ejp
+// requires person hreft on ejp, e.g.
+//https://mts-ncomms.nature.com/cgi-bin/main.plex?form_type=biblio_dump&j_id=18&ms_id=482895&ms_rev_no=0&ms_id_key=ftdzfYUcGTTnVM9iw67uXKNA&auth_id=2510095
 async function eJPGetEmail(nameHref) {
     try {
         const response = await fetch(nameHref);
@@ -44,6 +46,7 @@ async function eJPGetEmail(nameHref) {
             const email = mailtoLink
                 .getAttribute("href")
                 .replace("mailto:", "");
+            console.log(email)
             return email;
         }
         return null; // Return null if no email found
@@ -84,7 +87,6 @@ async function eJPPersonSearch(
 
     try {
         const response = await fetch(
- //           "https://mts-ncomms.nature.com/cgi-bin/main.plex",
                 $('#nf_assign_rev').attr('action'),
             {
                 method: "POST",
@@ -101,7 +103,6 @@ async function eJPPersonSearch(
                 credentials: "include"
             }
         );
-
         if (!response.ok) {
             throw new Error("Network response was not ok.");
         }
@@ -118,7 +119,6 @@ async function eJPPersonSearch(
         }
 
         const rows = table.querySelectorAll("tbody > tr");
-
         const extractedData = Array.from(rows).map((row) => {
             const cells = row.querySelectorAll("td");
             const nameLink = cells[1].querySelector("a"); // First <a> tag in the name cell
@@ -161,11 +161,8 @@ function separateNameAndInitial(fullName) {
     if (parts.length > 1) {
         // Filter parts that are likely initials (e.g., "J.", "K.L.", etc.)
         const initialParts = parts.slice(1).filter(part => part.match(/^[A-Z]\.?$/i) || part.includes("."));
-
         // Join the initials with spaces
         middleInitials = initialParts.join(" ");
-
-
         // Everything before the first initial is considered part of the first name
         const nonInitialPartsIndex = parts.findIndex(part => initialParts.includes(part));
         firstName = parts.slice(0, nonInitialPartsIndex).join(" ");
@@ -175,9 +172,9 @@ function separateNameAndInitial(fullName) {
     return { firstName, middleInitials };
 }
 
+// assign reviewer using requests
 async function fetchNatureData(requestBody) {
     const response = await fetch(
-        //"https://mts-ncomms.nature.com/cgi-bin/main.plex",
         $('#nf_assign_rev').attr('action'),
         {
             method: "POST",
@@ -207,15 +204,12 @@ function createSpinner() {
     //const spinner=document.createElement("div");
     const spinner = document.createElement("div");
     spinner.className = "dot-spinner";
-
-
     for (let i = 0; i < 4; i++) {
         const dot = document.createElement("div");
         spinner.appendChild(dot);
     }
     return spinner;
 }
-
 
 // Function to create the loader overlay
 function createLoaderOverlay() {
@@ -229,14 +223,12 @@ function createLoaderOverlay() {
         div.className = 'loader'; // Add a class for loader divs
         overlay.appendChild(div);
     }
-
     return overlay;
 }
 
 function blinkButton(selector, times) {
     $(selector).css('animation-iteration-count', times * 2); // Each blink is a cycle of appearing and disappearing, hence times * 2
     $(selector).addClass("blink");
-
     // Optional: Remove the class after the animation ends, if you don't want the style to persist
     setTimeout(() => {
         $(selector).removeClass("blink");

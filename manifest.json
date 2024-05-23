@@ -17,7 +17,8 @@
                 "jquery.js",
                 "helper_functions.js",
                 "bootstrap.min.js",
-                "contentMTS.js"
+                "contentMTS.js",
+                "MSDetails.js"
             ],
             "css": [
                 "custom.css",

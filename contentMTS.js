@@ -1,4 +1,3 @@
-// search results modal (initiaded by top bar) using bootstrap5
 
 function showResultsPopup(data) {
     // Check if a modal already exists, if so, remove it
@@ -34,7 +33,6 @@ function showResultsPopup(data) {
     resultsModal.show();
 }
 
-
 // assign reviewer on eJP based on ID and page params
 async function assignReviewer(reviewerId, jId, msId, msRevNo, msIdKey, currentStageId) {
     // Assuming these additional values are also needed and obtained earlier
@@ -62,11 +60,6 @@ async function assignReviewer(reviewerId, jId, msId, msRevNo, msIdKey, currentSt
 
 // when RF button clicked -> reviewerFinderPopup reviewerFinder
 function initiateRevFinding() {
-
-
-    const randomNumber = Math.floor(Math.random() * 1000);
-    const formattedNumber = randomNumber.toString().padStart(3, '0');
-    //document.title = `↙️ ${formattedNumber} Importing Reviewers`;
     const msDetailsRow = document.querySelector(
         "#ms_details_row_author_information"
     );
@@ -74,7 +67,6 @@ function initiateRevFinding() {
         console.error("The table row with author information was not found.");
         return;
     }
-
     const table = msDetailsRow.closest("table"); // Find the closest parent table
 
     // Function to find sibling TD text based on TH text content
@@ -131,8 +123,7 @@ function initiateRevFinding() {
     reviewerFinder(
         findDataByText("Title"),
         authors,
-        findDataByText("Abstract"),
-        formattedNumber
+        findDataByText("Abstract")
     );
     reviewerFinderPopup();
 }
@@ -214,15 +205,12 @@ function reviewerFinderPopup() {
                 // Remove the loader overlay when done
                 loaderOverlay.remove();
             });
-
-
     });
 
     // Show the modal using Bootstrap's modal method
     const modalInstance = new bootstrap.Modal(document.getElementById('reviewerFinderModal'));
     modalInstance.show();
 }
-
 
 async function addToShortList(fullName, lastName, email, inst) {
     const $list = $("#reviewerFinderModal .popupList");
@@ -250,7 +238,6 @@ async function addToShortList(fullName, lastName, email, inst) {
     $list.append($item);
 
     // try searching for matching authors on eJP
-
     try {
         const form = document.getElementById("nf_assign_rev");
 
@@ -265,7 +252,6 @@ async function addToShortList(fullName, lastName, email, inst) {
             if (!searchDataByEmail || searchDataByEmail.length === 0) {
                 $secondLine.append($(`<li>❌ Email not on eJP</li>`));
                 $item.find('input[type="checkbox"]').prop("checked", true);
-
             }
 
             const combinedData = [...searchData, ...searchDataByEmail].filter(element => element !== null);
@@ -299,7 +285,6 @@ async function addToShortList(fullName, lastName, email, inst) {
         $secondLine.empty().text("Failed to load data");
     } finally {
 
-
         // Reordering and checkbox handling
         $(".eJPResult").each(function () {
             const $li = $(this);
@@ -321,7 +306,6 @@ async function addToShortList(fullName, lastName, email, inst) {
         $spinner.remove(); // Ensure the spinner is removed after processing
     }
 }
-
 
 // Send a message to open a new RF tab
 function reviewerFinder(title, authors, abstract, MTSid) {
@@ -414,7 +398,6 @@ async function submitFormAssign(firstName, lastName, email, inst) {
     }
 }
 
-
 $(document).ready(function () {
     // Check if the specific element exists
     if ($("#nf_assign_rev").length > 0) {
@@ -444,20 +427,10 @@ function loadRobotoFont() {
     document.head.appendChild(linkElement);
 }
 
-//loadRobotoFont();
-
-
-
-
 const GA_ENDPOINT = 'https://www.google-analytics.com/mp/collect';
 const MEASUREMENT_ID = `G-3ZRV844YEE`;
 const API_SECRET = `fXY6muchQf6nomHF4aTutA`;
-
 const SESSION_EXPIRATION_IN_MIN = 30;
-
-
-
-
 const DEFAULT_ENGAGEMENT_TIME_IN_MSEC = 100;
 
 async function sendEvent(eventname, eventid) {
@@ -466,7 +439,6 @@ async function sendEvent(eventname, eventid) {
         chrome.runtime.sendMessage({ action: "getOrCreateSessionId" }, response => {
             const sessionId = response.sessionId;
             
-
             fetch(`${GA_ENDPOINT}?measurement_id=${MEASUREMENT_ID}&api_secret=${API_SECRET}`, {
                 method: "POST",
                 body: JSON.stringify({
